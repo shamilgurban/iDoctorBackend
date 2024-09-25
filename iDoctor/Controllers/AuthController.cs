@@ -4,9 +4,9 @@ using System.IdentityModel.Tokens.Jwt;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 using iDoctor.Models;
-using Microsoft.AspNetCore.Authorization;
 
 
 namespace iDoctor.Controllers;
@@ -74,7 +74,6 @@ public class AuthController : ControllerBase
     private string GenerateJwtToken(string username, string role)
     {
         var jwtSettings = _configuration.GetSection("Jwt");
-        var x = jwtSettings["Key"];
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
 
         var claims = new[]
