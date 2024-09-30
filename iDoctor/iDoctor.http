@@ -1,6 +1,0 @@
-@iDoctor_HostAddress = http://localhost:5043
-
-GET {{iDoctor_HostAddress}}/user/
-Accept: application/json
-
-###
