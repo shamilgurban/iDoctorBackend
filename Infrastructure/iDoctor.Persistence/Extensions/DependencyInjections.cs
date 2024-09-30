@@ -1,11 +1,7 @@
 ﻿using iDoctor.Domain.Interfaces;
 using iDoctor.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace iDoctor.Persistence.Extensions
 {

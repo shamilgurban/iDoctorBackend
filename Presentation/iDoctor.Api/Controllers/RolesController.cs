@@ -1,9 +1,7 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using iDoctor.Application.Dtos.RoleDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.RoleValidators;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers

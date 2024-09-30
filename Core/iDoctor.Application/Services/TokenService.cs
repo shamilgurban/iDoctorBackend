@@ -17,6 +17,7 @@ namespace iDoctor.Application.Services
         {
             _configuration = configuration;
         }
+
         public TokenDto GenerateJwtToken(TokenCreateDto request)
         {
             var jwtSettings = _configuration.GetSection("Jwt");

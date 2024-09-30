@@ -1,12 +1,8 @@
 ﻿using iDoctor.Application.Dtos.Token;
 using iDoctor.Application.Dtos.UserDtos;
 using iDoctor.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace iDoctor.Application.Services.Interfaces
 {

@@ -40,7 +40,7 @@ namespace iDoctor.Api.Controllers
 
             if (user is not null)
             {
-                return BadRequest(new { Message = "This Email Already Exists" });
+                return BadRequest(new { Message = "This Email Already Used" });
             }
 
             await _userService.RegisterAsync(request);

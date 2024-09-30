@@ -4,12 +4,7 @@ using iDoctor.Application.Dtos.UserDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Domain.Entities;
 using iDoctor.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iDoctor.Application.Services
 {
@@ -33,26 +28,27 @@ namespace iDoctor.Application.Services
 
         public async Task RegisterAsync(RegisterDto model)
         {
-            model.Password = _passwordService.HashPassword(model.Password);
+            var user = _mapper.Map<User>(model);
+            user.HashedPassword = _passwordService.HashPassword(model.Password);
 
-            await _userRepository.AddAsync(_mapper.Map<User>(model));
+            await _userRepository.AddAsync(user);
         }
 
         public async Task<List<ResultUserDto>> GetAllAsync(bool tracking = true)
         {
-            var Users = await _userRepository.GetAllAsync();
-            return _mapper.Map<List<ResultUserDto>>(Users);
+            var users = await _userRepository.GetAllAsync();
+            return _mapper.Map<List<ResultUserDto>>(users);
         }
 
         public async Task<ResultUserDto> GetByIdAsync(int id, bool tracking = true)
         {
-            var User = await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
 
-            if (User is null)
+            if (user is null)
             {
                 return null;
             }
-            return _mapper.Map<ResultUserDto>(User);
+            return _mapper.Map<ResultUserDto>(user);
         }
 
         public async Task<ResultUserDto> GetSingleAsync(Expression<Func<User, bool>> method, bool tracking = true)
@@ -67,28 +63,28 @@ namespace iDoctor.Application.Services
 
         public async Task<bool> RemoveAsync(int id)
         {
-            var User = await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
 
-            if (User == null)
+            if (user == null)
             {
                 return false;
             }
 
-            await _userRepository.RemoveAsync(User);
+            await _userRepository.RemoveAsync(user);
 
             return true;
         }
 
         public async Task<bool> UpdateAsync(int id, UpdateUserDto model)
         {
-            var User = await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
 
-            if (User == null)
+            if (user == null)
             {
                 return false;
             }
-            _mapper.Map(model, User);
-            await _userRepository.UpdateAsync(User);
+            _mapper.Map(model, user);
+            await _userRepository.UpdateAsync(user);
 
             return true;
         }
