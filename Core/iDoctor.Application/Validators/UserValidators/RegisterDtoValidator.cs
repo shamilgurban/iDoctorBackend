@@ -17,8 +17,7 @@ namespace iDoctor.Application.Validators.UserValidators
             .Length(2, 50).WithMessage("Surname must be between 2 and 50 characters.");
 
             RuleFor(x => x.Type)
-            .NotEmpty().WithMessage("Type is required.")
-            .Length(2, 50).WithMessage("Type must be between 2 and 50 characters.");
+            .NotEmpty().WithMessage("Type is required.");
 
             RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required.")

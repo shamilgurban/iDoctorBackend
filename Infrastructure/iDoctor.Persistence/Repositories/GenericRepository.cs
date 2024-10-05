@@ -20,45 +20,81 @@ namespace iDoctor.Persistence.Repositories
         public async Task AddAsync(T model)
         {
             await Table.AddAsync(model);
-            await SaveAsync();
+          
         }
 
-        public async Task<List<T>> GetAllAsync(bool tracking = true)
-        {        
-            var query =await Table.ToListAsync();
+        public async Task<List<T>> GetAllAsync(bool tracking = true, params Expression<Func<T, object>>[] includes)
+        {     
+            IQueryable<T> query = Table;
+
             if (!tracking)
-                query = await Table.AsNoTracking().ToListAsync(); ;
-            return query;
+                query = query.AsNoTracking();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id, bool tracking = true)
+        public async Task<T> GetByIdAsync(int id, bool tracking = true, params Expression<Func<T, object>>[] includes)
         {
-            var query = Table.AsQueryable();
+          
+            IQueryable<T> query = Table;
+
             if (!tracking)
-                query = Table.AsNoTracking();
+                query = query.AsNoTracking();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
             return await query.FirstOrDefaultAsync(data => data.Id == id);
         }
 
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)
         {
-            var query = Table.AsQueryable();
+            IQueryable<T> query = Table.AsQueryable();
+
             if (!tracking)
-                query = Table.AsNoTracking();
+            {
+                query = query.AsNoTracking();
+            }
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
             return await query.FirstOrDefaultAsync(method);
+
         }
 
-        public async Task<List<T>> GetWhereAsync(Expression<Func<T, bool>> method, bool tracking = true)
+        public async Task<List<T>> GetWhereAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)
         {
-            var query =await Table.Where(method).ToListAsync();
+            var query = Table.Where(method);
+
+          
             if (!tracking)
-                query = await Table.AsNoTracking().Where(method).ToListAsync();
-            return query;
+            {
+                query = query.AsNoTracking();
+            }
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+
+            return await query.ToListAsync();
         }
 
         public async Task RemoveAsync(T model)
         {
             Table.Remove(model);
-            await SaveAsync();
+           
         }
 
         public async Task SaveAsync() => await _context.SaveChangesAsync();
@@ -66,7 +102,7 @@ namespace iDoctor.Persistence.Repositories
         public async Task UpdateAsync(T model)
         {
            Table.Update(model);
-           await SaveAsync();
+          
         }
     }
 }

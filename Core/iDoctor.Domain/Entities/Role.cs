@@ -6,5 +6,6 @@ namespace iDoctor.Domain.Entities
     public class Role:BaseEntity
     {
         public string Name { get; set; }
+        public int UserType { get; set; }
     }
 }
