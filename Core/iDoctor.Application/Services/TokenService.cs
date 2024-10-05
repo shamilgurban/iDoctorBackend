@@ -33,6 +33,8 @@ namespace iDoctor.Application.Services
                 claims.Add(new Claim(ClaimTypes.Role, role));
             });
 
+            claims.Add(new Claim("UserType", request.UserType));
+
             var creds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

@@ -15,6 +15,15 @@ namespace iDoctor.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Role>().HasData(
+                                   new Role { Id = 1, Name = "VerifyDoctor",UserType=1 },
+                                   new Role { Id = 2, Name = "CreateAppointment",UserType=2 },
+                                   new Role { Id = 3, Name = "CreateAppointment",UserType=3 },
+                                   new Role { Id = 4, Name = "UpdatePatient",UserType=2 },
+                                   new Role { Id = 5, Name = "UpdateDoctor",UserType=3 }
+                                                );
+
             modelBuilder.Entity<User>()
                         .HasOne(u => u.Patient)
                         .WithOne(p => p.User)

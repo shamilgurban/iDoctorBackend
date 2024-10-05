@@ -115,12 +115,23 @@ namespace iDoctor.Application.Services
             if (roles is null) return null;
            
             var roleNames=roles.Select(r => r.Name).ToList();
-            
+
+            string type=string.Empty;
+
+            foreach (var item in Enum.GetValues(typeof(UserTypes)))
+            {
+                if ((int)item == userType)
+                {
+                    type=item.ToString();
+                }
+            }
+
             return _tokenService.GenerateJwtToken(new TokenCreateDto
             {
                Id=user.Id,
                Email=user.Email,
-               Roles=roleNames
+               Roles=roleNames,
+               UserType=type
             });
         }
     }
