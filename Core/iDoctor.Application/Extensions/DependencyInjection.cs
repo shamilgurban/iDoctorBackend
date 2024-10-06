@@ -12,7 +12,10 @@ namespace iDoctor.Application.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<ITokenService, TokenService>();
-           
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IEmailService, EmailService>();
+
             return services;
         }
     }

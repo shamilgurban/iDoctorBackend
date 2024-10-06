@@ -8,13 +8,13 @@ namespace iDoctor.Domain.Interfaces
     {
         public Task AddAsync(T model);
 
-        public Task<List<T>> GetAllAsync(bool tracking = true);
+        public Task<List<T>> GetAllAsync(bool tracking = true, params Expression<Func<T, object>>[] includes);
 
-        public Task<T> GetByIdAsync(int id, bool tracking = true);
+        public Task<T> GetByIdAsync(int id, bool tracking = true, params Expression<Func<T, object>>[] includes);
 
-        public Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
+        public Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes);
 
-        public Task<List<T>> GetWhereAsync(Expression<Func<T, bool>> method, bool tracking = true);
+        public Task<List<T>> GetWhereAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes);
 
         public Task RemoveAsync(T model);
         public  Task UpdateAsync(T model);

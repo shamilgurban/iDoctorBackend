@@ -21,6 +21,7 @@ namespace iDoctor.Application.Services
         public async Task AddAsync(CreateRoleDto model)
         {
            await _roleRepository.AddAsync(_mapper.Map<Role>(model));
+           await _roleRepository.SaveAsync();
         }
 
         public async Task<List<ResultRoleDto>> GetAllAsync(bool tracking = true)
@@ -47,7 +48,7 @@ namespace iDoctor.Application.Services
 
         public async Task<List<ResultRoleDto>> GetWhereAsync(Expression<Func<Role, bool>> method, bool tracking = true)
         {
-            return _mapper.Map<List<ResultRoleDto>>(_roleRepository.GetWhereAsync(method));
+            return _mapper.Map<List<ResultRoleDto>>(await _roleRepository.GetWhereAsync(method));
         }
 
         public async Task<bool> RemoveAsync(int id)
@@ -60,6 +61,7 @@ namespace iDoctor.Application.Services
             }
 
             await _roleRepository.RemoveAsync(role);
+            await _roleRepository.SaveAsync();
 
             return true;
         }
@@ -73,7 +75,9 @@ namespace iDoctor.Application.Services
                 return false;
             }
             _mapper.Map(model, role);
+
             await _roleRepository.UpdateAsync(role);
+            await _roleRepository.SaveAsync();
 
             return true;
         }

@@ -7,8 +7,11 @@ namespace iDoctor.Domain.Entities
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Type { get; set; }
+        public int Type { get; set; }
         public string Email { get; set; }
         public string HashedPassword { get; set; }
+        public string? Image { get; set; }
+        public Patient Patient { get; set; }
+        public Doctor Doctor { get; set; }
     }
 }

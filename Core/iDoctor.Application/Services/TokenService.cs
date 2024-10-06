@@ -28,10 +28,12 @@ namespace iDoctor.Application.Services
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            //request.Roles.ForEach(role =>
-            //{
-            //    claims.Add(new Claim(ClaimTypes.Role, role));
-            //});
+            request.Roles.ForEach(role =>
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            });
+
+            claims.Add(new Claim("UserType", request.UserType));
 
             var creds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
