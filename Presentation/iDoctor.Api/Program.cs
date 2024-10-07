@@ -48,19 +48,17 @@ builder.Services.AddServiceLayer();
 
 var app = builder.Build();
 
-app.UseStaticFiles(new StaticFileOptions
+using (var scope = app.Services.CreateScope())
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(app.Environment.ContentRootPath, "Uploads")),
-    RequestPath = "/Uploads" // URL path to access files
-});
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();  // This line applies any pending migrations
+}
+
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthorization();
 

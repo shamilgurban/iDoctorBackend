@@ -47,15 +47,10 @@ namespace iDoctor.Application.Services
             };
 
             var fileName = $"{model.Email}_{model.VerificationDocument.FileName}";
-            var relativePath = Path.Combine("Uploads", fileName);
+            var relativePath = Path.Combine("wwwroot", fileName);
 
             var absolutePath = Path.Combine(_hostEnvironment.ContentRootPath, relativePath);
 
-            var directoryPath = Path.GetDirectoryName(absolutePath);
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
             using (var stream = new FileStream(absolutePath, FileMode.Create))
             {
                 await model.VerificationDocument.CopyToAsync(stream);
