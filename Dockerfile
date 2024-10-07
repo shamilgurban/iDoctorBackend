@@ -1,7 +1,7 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+
 WORKDIR /app
 EXPOSE 8080
 
@@ -23,5 +23,6 @@ RUN dotnet publish "./iDoctor.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 
 FROM base AS final
 WORKDIR /app
+RUN mkdir -p wwwroot
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "iDoctor.Api.dll"]

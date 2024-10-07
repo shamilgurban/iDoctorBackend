@@ -49,7 +49,7 @@ namespace iDoctor.Application.Services
             var fileName = $"{model.Email}_{model.VerificationDocument.FileName}";
             var relativePath = Path.Combine("wwwroot", fileName);
 
-            var absolutePath = Path.Combine(_hostEnvironment.ContentRootPath, relativePath);
+            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
 
             using (var stream = new FileStream(absolutePath, FileMode.Create))
             {
