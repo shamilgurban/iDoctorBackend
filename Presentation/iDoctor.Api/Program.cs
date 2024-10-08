@@ -58,12 +58,6 @@ builder.Services.AddServiceLayer();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();  // This line applies any pending migrations
-}
-
 
 
 app.UseStaticFiles();

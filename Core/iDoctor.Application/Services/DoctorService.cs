@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 
 namespace iDoctor.Application.Services
 {
-    public class DoctorService:IDoctorService
+    public class DoctorService : IDoctorService
     {
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPasswordService _passwordService;
@@ -35,7 +35,7 @@ namespace iDoctor.Application.Services
         public async Task<bool> RegisterAsync(RegisterDoctorDto model)
         {
 
-            if(model.VerificationDocument==null || model.VerificationDocument.Length==0) return false;
+            if (model.VerificationDocument == null || model.VerificationDocument.Length == 0) return false;
 
             var user = new User
             {
@@ -47,9 +47,8 @@ namespace iDoctor.Application.Services
             };
 
             var fileName = $"{model.Email}_{model.VerificationDocument.FileName}";
-            var relativePath = Path.Combine("wwwroot", fileName);
 
-            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
 
             using (var stream = new FileStream(absolutePath, FileMode.Create))
             {
@@ -60,10 +59,10 @@ namespace iDoctor.Application.Services
             {
                 User = user,
                 IsVerified = false,
-                VerificationDocumentPath=relativePath
+                VerificationDocumentPath = fileName
             };
 
-          
+
 
             await _doctorRepository.AddAsync(doctor);
             await _doctorRepository.SaveAsync();
@@ -82,7 +81,7 @@ namespace iDoctor.Application.Services
             var doctor = await _doctorRepository.GetByIdAsync(id, tracking, d => d.User);
 
             if (doctor is null) return null;
-       
+
             return _mapper.Map<ResultDoctorDto>(doctor);
         }
 
@@ -93,7 +92,7 @@ namespace iDoctor.Application.Services
 
         public async Task<List<ResultDoctorDto>> GetWhereAsync(Expression<Func<Doctor, bool>> method, bool tracking = true)
         {
-            var doctors = await _doctorRepository.GetWhereAsync(method,tracking,d=>d.User);
+            var doctors = await _doctorRepository.GetWhereAsync(method, tracking, d => d.User);
 
             return _mapper.Map<List<ResultDoctorDto>>(doctors);
         }
@@ -131,7 +130,7 @@ namespace iDoctor.Application.Services
             var doctor = await _doctorRepository.GetByIdAsync(id, tracking, p => p.User);
 
             if (doctor == null) return false;
-         
+
             string existingHashedPassword = doctor.User.HashedPassword;
 
             _mapper.Map(model, doctor);
