@@ -6,6 +6,7 @@ using iDoctor.Application.Services.Interfaces;
 using iDoctor.Domain.Entities;
 using iDoctor.Domain.Interfaces;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 using System.Linq.Expressions;
 
 
@@ -48,7 +49,10 @@ namespace iDoctor.Application.Services
 
             var fileName = $"{model.Email}_{model.VerificationDocument.FileName}";
 
-            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+            var relativePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            Directory.CreateDirectory(relativePath);
+
+            var absolutePath = Path.Combine(relativePath, fileName);
 
             using (var stream = new FileStream(absolutePath, FileMode.Create))
             {

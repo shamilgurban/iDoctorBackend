@@ -23,6 +23,5 @@ RUN dotnet publish "./iDoctor.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 
 FROM base AS final
 WORKDIR /app
-RUN mkdir -p wwwroot
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "iDoctor.Api.dll"]
