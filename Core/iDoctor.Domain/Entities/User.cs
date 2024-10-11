@@ -11,6 +11,7 @@ namespace iDoctor.Domain.Entities
         public string Email { get; set; }
         public string HashedPassword { get; set; }
         public string? Image { get; set; }
+        public string? Phone { get; set; }
         public Patient Patient { get; set; }
         public Doctor Doctor { get; set; }
     }

@@ -15,6 +15,9 @@ namespace iDoctor.Application.Extensions
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IGenderService, GenderService>();
+            services.AddScoped<IMaritalStatusService, MaritalStatusService>();
+            services.AddScoped<IBloodTypeService, BloodTypeService>();
 
             return services;
         }

@@ -16,20 +16,17 @@ namespace iDoctor.Application.Services
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPasswordService _passwordService;
         private readonly IUserRepository _userRepository;
-        private readonly IHostEnvironment _hostEnvironment;
         private readonly IMapper _mapper;
 
         public DoctorService(IDoctorRepository doctorRepository,
                            IMapper mapper,
                            IPasswordService passwordService,
-                           IUserRepository userRepository,
-                           IHostEnvironment hostEnvironment)
+                           IUserRepository userRepository )
         {
             _doctorRepository = doctorRepository;
             _mapper = mapper;
             _passwordService = passwordService;
             _userRepository = userRepository;
-            _hostEnvironment = hostEnvironment;
         }
 
         public async Task<bool> RegisterAsync(RegisterDoctorDto model)

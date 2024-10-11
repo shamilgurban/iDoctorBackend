@@ -50,13 +50,13 @@ namespace iDoctor.Application.Services
 
         public async Task<List<ResultPatientDto>> GetAllAsync(bool tracking = true)
         {
-            var patients = await _patientRepository.GetAllAsync(tracking,p=>p.User);
+            var patients = await _patientRepository.GetAllAsync(tracking,p=>p.User,p=>p.MaritalStatus,p=>p.BloodType,p=>p.Gender);
             return _mapper.Map<List<ResultPatientDto>>(patients);
         }
 
         public async Task<ResultPatientDto> GetByIdAsync(int id, bool tracking = true)
         {
-            var patient = await _patientRepository.GetByIdAsync(id,tracking,p=>p.User);
+            var patient = await _patientRepository.GetByIdAsync(id,tracking,p=>p.User, p => p.MaritalStatus, p => p.BloodType, p => p.Gender);
 
             if (patient is null) return null;
             
@@ -112,6 +112,7 @@ namespace iDoctor.Application.Services
                 var base64Image = model.Image.ToBase64();
                 patient.User.Image = $"data:image/jpeg;base64,{base64Image}";
             }
+          
 
             await _patientRepository.UpdateAsync(patient);
             await _patientRepository.SaveAsync();

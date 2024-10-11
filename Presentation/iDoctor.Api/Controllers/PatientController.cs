@@ -54,12 +54,21 @@ namespace iDoctor.Api.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
-            var user = await _userService.GetSingleAsync(m => m.Email == request.Email && ((m.Doctor != null) || (m.Patient.Id != id)));
+            var userWithEmail = await _userService.GetSingleAsync(m => m.Email == request.Email && ((m.Doctor != null) || (m.Patient.Id != id)));
 
-            if (user is not null)
+            if (userWithEmail is not null)
             {
                 return BadRequest(new { Message = "This Email Already Taken" });
             }
+
+            var userWithPhone = await _userService.GetSingleAsync(m => m.Phone == request.Phone && ((m.Doctor != null) || (m.Patient.Id != id)));
+
+            if (userWithPhone is not null)
+            {
+                return BadRequest(new { Message = "This Phone Number Already Taken" });
+            }
+
+
             var result = await _patientService.UpdateAsync(id, request);
 
             if (!result)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iDoctor.Persistence.Context;
 
@@ -11,9 +12,11 @@ using iDoctor.Persistence.Context;
 namespace iDoctor.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241010142819_added_gender_bloodtype_martialstatus_seeded_datas")]
+    partial class added_gender_bloodtype_martialstatus_seeded_datas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,15 +93,19 @@ namespace iDoctor.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("District")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVerified")
@@ -111,7 +118,7 @@ namespace iDoctor.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ZipCode")
+                    b.Property<int>("ZipCode")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -151,7 +158,7 @@ namespace iDoctor.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("iDoctor.Domain.Entities.MaritalStatus", b =>
+            modelBuilder.Entity("iDoctor.Domain.Entities.MartialStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,7 +172,7 @@ namespace iDoctor.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaritalStatuses");
+                    b.ToTable("MartialStatuses");
 
                     b.HasData(
                         new
@@ -200,7 +207,7 @@ namespace iDoctor.Persistence.Migrations
                     b.Property<string>("HealthRecord")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MaritalStatusId")
+                    b.Property<int?>("MartialStatusId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -212,7 +219,7 @@ namespace iDoctor.Persistence.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.HasIndex("MaritalStatusId");
+                    b.HasIndex("MartialStatusId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -331,9 +338,9 @@ namespace iDoctor.Persistence.Migrations
                         .WithMany("Patients")
                         .HasForeignKey("GenderId");
 
-                    b.HasOne("iDoctor.Domain.Entities.MaritalStatus", "MaritalStatus")
+                    b.HasOne("iDoctor.Domain.Entities.MartialStatus", "MartialStatus")
                         .WithMany("Patients")
-                        .HasForeignKey("MaritalStatusId");
+                        .HasForeignKey("MartialStatusId");
 
                     b.HasOne("iDoctor.Domain.Entities.User", "User")
                         .WithOne("Patient")
@@ -345,7 +352,7 @@ namespace iDoctor.Persistence.Migrations
 
                     b.Navigation("Gender");
 
-                    b.Navigation("MaritalStatus");
+                    b.Navigation("MartialStatus");
 
                     b.Navigation("User");
                 });
@@ -360,7 +367,7 @@ namespace iDoctor.Persistence.Migrations
                     b.Navigation("Patients");
                 });
 
-            modelBuilder.Entity("iDoctor.Domain.Entities.MaritalStatus", b =>
+            modelBuilder.Entity("iDoctor.Domain.Entities.MartialStatus", b =>
                 {
                     b.Navigation("Patients");
                 });

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iDoctor.Persistence.Context;
 
@@ -11,9 +12,11 @@ using iDoctor.Persistence.Context;
 namespace iDoctor.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241010141211_added_gender_bloodtype_martialstatus_tables")]
+    partial class added_gender_bloodtype_martialstatus_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,48 +40,6 @@ namespace iDoctor.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Type = "O(I) Rh+"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Type = "O(I) Rh-"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Type = "A(II) Rh+"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Type = "A(II) Rh-"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Type = "B(III) Rh+"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Type = "B(III) Rh-"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Type = "AB(IV) Rh+"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Type = "AB(IV) Rh-"
-                        });
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Doctor", b =>
@@ -90,15 +51,19 @@ namespace iDoctor.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("District")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVerified")
@@ -111,7 +76,7 @@ namespace iDoctor.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ZipCode")
+                    b.Property<int>("ZipCode")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -137,21 +102,9 @@ namespace iDoctor.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Qadın"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Kişi"
-                        });
                 });
 
-            modelBuilder.Entity("iDoctor.Domain.Entities.MaritalStatus", b =>
+            modelBuilder.Entity("iDoctor.Domain.Entities.MartialStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,19 +118,7 @@ namespace iDoctor.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MaritalStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Status = "Subay"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Status = "Evli"
-                        });
+                    b.ToTable("MartialStatuses");
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Patient", b =>
@@ -200,7 +141,7 @@ namespace iDoctor.Persistence.Migrations
                     b.Property<string>("HealthRecord")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MaritalStatusId")
+                    b.Property<int?>("MartialStatusId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -212,7 +153,7 @@ namespace iDoctor.Persistence.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.HasIndex("MaritalStatusId");
+                    b.HasIndex("MartialStatusId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -331,9 +272,9 @@ namespace iDoctor.Persistence.Migrations
                         .WithMany("Patients")
                         .HasForeignKey("GenderId");
 
-                    b.HasOne("iDoctor.Domain.Entities.MaritalStatus", "MaritalStatus")
+                    b.HasOne("iDoctor.Domain.Entities.MartialStatus", "MartialStatus")
                         .WithMany("Patients")
-                        .HasForeignKey("MaritalStatusId");
+                        .HasForeignKey("MartialStatusId");
 
                     b.HasOne("iDoctor.Domain.Entities.User", "User")
                         .WithOne("Patient")
@@ -345,7 +286,7 @@ namespace iDoctor.Persistence.Migrations
 
                     b.Navigation("Gender");
 
-                    b.Navigation("MaritalStatus");
+                    b.Navigation("MartialStatus");
 
                     b.Navigation("User");
                 });
@@ -360,7 +301,7 @@ namespace iDoctor.Persistence.Migrations
                     b.Navigation("Patients");
                 });
 
-            modelBuilder.Entity("iDoctor.Domain.Entities.MaritalStatus", b =>
+            modelBuilder.Entity("iDoctor.Domain.Entities.MartialStatus", b =>
                 {
                     b.Navigation("Patients");
                 });
