@@ -12,7 +12,12 @@ namespace iDoctor.Domain.Entities
         public string? District { get; set; }
         public string? Country { get; set; }
         public int? ZipCode { get; set; }
+        public string? ClinicName { get; set; }
+        public string? ClinicAddress { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
+        public int? SpecialtyId { get; set; }
+        public virtual Specialty Specialty { get; set; }
+        public virtual ICollection<Education> Educations { get; set; }
     }
 }

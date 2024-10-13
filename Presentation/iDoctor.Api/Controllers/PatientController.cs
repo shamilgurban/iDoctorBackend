@@ -33,11 +33,8 @@ namespace iDoctor.Api.Controllers
         {
             var patient = await _patientService.GetByIdAsync(id);
 
-            if (patient == null)
-            {
-                return NotFound(new { Message = "Patient Not Found" });
-            }
-
+            if (patient == null) return NotFound(new { Message = "Patient Not Found" });
+           
             return Ok(patient);
         }
 
@@ -49,32 +46,21 @@ namespace iDoctor.Api.Controllers
             UpdatePatientDtoValidator validator = new UpdatePatientDtoValidator();
             ValidationResult validationResult = validator.Validate(request);
 
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
-
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+          
             var userWithEmail = await _userService.GetSingleAsync(m => m.Email == request.Email && ((m.Doctor != null) || (m.Patient.Id != id)));
 
-            if (userWithEmail is not null)
-            {
-                return BadRequest(new { Message = "This Email Already Taken" });
-            }
-
+            if (userWithEmail is not null) return BadRequest(new { Message = "This Email Already Taken" });
+         
             var userWithPhone = await _userService.GetSingleAsync(m => m.Phone == request.Phone && ((m.Doctor != null) || (m.Patient.Id != id)));
 
-            if (userWithPhone is not null)
-            {
-                return BadRequest(new { Message = "This Phone Number Already Taken" });
-            }
-
+            if (userWithPhone is not null) return BadRequest(new { Message = "This Phone Number Already Taken" });
+          
 
             var result = await _patientService.UpdateAsync(id, request);
 
-            if (!result)
-            {
-                return NotFound(new { Message = "Patient Not Found" });
-            }
+            if (!result) return NotFound(new { Message = "Patient Not Found" });
+           
 
             return Ok(new { Message = "Patient Updated Successfully" });
         }
@@ -85,11 +71,8 @@ namespace iDoctor.Api.Controllers
         {
             var result = await _patientService.RemoveAsync(id);
 
-            if (!result)
-            {
-                return NotFound(new { Message = "Patient Not Found" });
-            }
-
+            if (!result) return NotFound(new { Message = "Patient Not Found" });
+           
             return Ok(new { Message = "Patient Deleted Successfully" });
         }
     }

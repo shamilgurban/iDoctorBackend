@@ -56,7 +56,7 @@ namespace iDoctor.Application.Services
 
             if (maritalStatus == null) return false;
 
-            await _maritalStatusRepository.RemoveAsync(maritalStatus);
+             _maritalStatusRepository.Remove(maritalStatus);
             await _maritalStatusRepository.SaveAsync();
 
             return true;
@@ -70,7 +70,7 @@ namespace iDoctor.Application.Services
 
             _mapper.Map(model, maritalStatus);
 
-            await _maritalStatusRepository.UpdateAsync(maritalStatus);
+             _maritalStatusRepository.Update(maritalStatus);
             await _maritalStatusRepository.SaveAsync();
 
             return true;

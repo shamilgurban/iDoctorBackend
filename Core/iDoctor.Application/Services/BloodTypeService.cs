@@ -54,7 +54,7 @@ namespace iDoctor.Application.Services
 
             if (bloodType == null) return false;
 
-            await _bloodTypeRepository.RemoveAsync(bloodType);
+             _bloodTypeRepository.Remove(bloodType);
             await _bloodTypeRepository.SaveAsync();
 
             return true;
@@ -68,7 +68,7 @@ namespace iDoctor.Application.Services
 
             _mapper.Map(model, bloodType);
 
-            await _bloodTypeRepository.UpdateAsync(bloodType);
+             _bloodTypeRepository.Update(bloodType);
             await _bloodTypeRepository.SaveAsync();
 
             return true;

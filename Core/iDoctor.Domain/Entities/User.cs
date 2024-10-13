@@ -12,7 +12,7 @@ namespace iDoctor.Domain.Entities
         public string HashedPassword { get; set; }
         public string? Image { get; set; }
         public string? Phone { get; set; }
-        public Patient Patient { get; set; }
-        public Doctor Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
+        public virtual Doctor Doctor { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iDoctor.Persistence.Context;
 
@@ -11,9 +12,11 @@ using iDoctor.Persistence.Context;
 namespace iDoctor.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241013151409_added_specialty_seeded_data")]
+    partial class added_specialty_seeded_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,32 +137,6 @@ namespace iDoctor.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("iDoctor.Domain.Entities.Education", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FieldOfStudy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UniversityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Educations");
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Gender", b =>
@@ -476,17 +453,6 @@ namespace iDoctor.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("iDoctor.Domain.Entities.Education", b =>
-                {
-                    b.HasOne("iDoctor.Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Educations")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("iDoctor.Domain.Entities.Patient", b =>
                 {
                     b.HasOne("iDoctor.Domain.Entities.BloodType", "BloodType")
@@ -519,11 +485,6 @@ namespace iDoctor.Persistence.Migrations
             modelBuilder.Entity("iDoctor.Domain.Entities.BloodType", b =>
                 {
                     b.Navigation("Patients");
-                });
-
-            modelBuilder.Entity("iDoctor.Domain.Entities.Doctor", b =>
-                {
-                    b.Navigation("Educations");
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Gender", b =>

@@ -15,6 +15,8 @@ namespace iDoctor.Persistence.Context
         public DbSet<Gender> Genders { get; set; }
         public DbSet<BloodType> BloodTypes { get; set; }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
+        public DbSet<Specialty>Specialties { get; set; }
+        public DbSet<Education> Educations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +46,27 @@ namespace iDoctor.Persistence.Context
                                    new BloodType { Id = 7, Type = "AB(IV) Rh+" },
                                    new BloodType { Id = 8, Type = "AB(IV) Rh-"});
 
+
+            modelBuilder.Entity<Specialty>().HasData(
+                                   new Specialty { Id = 1,  Name = "Kardiologiya" },       
+                                   new Specialty { Id = 2,  Name = "Nevrologiya" },       
+                                   new Specialty { Id = 3,  Name = "Dermatologiya" },      
+                                   new Specialty { Id = 4,  Name = "Pediatriya" },         
+                                   new Specialty { Id = 5,  Name = "Onkologiya" },         
+                                   new Specialty { Id = 6,  Name = "Ginekologiya" },      
+                                   new Specialty { Id = 7,  Name = "Travmatologiya" },    
+                                   new Specialty { Id = 8,  Name = "Ortopediya" },         
+                                   new Specialty { Id = 9,  Name = "Oftalmologiya" },      
+                                   new Specialty { Id = 10, Name = "Endokrinologiya" },   
+                                   new Specialty { Id = 11, Name = "Cərrahiyyə" },       
+                                   new Specialty { Id = 12, Name = "Urologiya" },         
+                                   new Specialty { Id = 13, Name = "Nefrologiya" },       
+                                   new Specialty { Id = 14, Name = "Psixiatriya" },       
+                                   new Specialty { Id = 15, Name = "Pulmonologiya" },     
+                                   new Specialty { Id = 16, Name = "Hematologiya" },      
+                                   new Specialty { Id = 17, Name = "Reabilitasiya" },     
+                                   new Specialty { Id = 18, Name = "Rheumatologiya" });   
+
             modelBuilder.Entity<User>()
                         .HasOne(u => u.Patient)
                         .WithOne(p => p.User)
@@ -70,6 +93,16 @@ namespace iDoctor.Persistence.Context
                         .HasOne(p => p.BloodType)
                         .WithMany(g => g.Patients)
                        .HasForeignKey(p => p.BloodTypeId);
+
+            modelBuilder.Entity<Doctor>()
+                      .HasOne(p => p.Specialty)
+                      .WithMany(g => g.Doctors)
+                     .HasForeignKey(p => p.SpecialtyId);
+
+            modelBuilder.Entity<Education>()
+                     .HasOne(p => p.Doctor)
+                     .WithMany(g => g.Educations)
+                     .HasForeignKey(p => p.DoctorId);    
 
 
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iDoctor.Persistence.Context;
 
@@ -11,9 +12,11 @@ using iDoctor.Persistence.Context;
 namespace iDoctor.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241013150419_added_specialty_table_and_updated_doctor_table")]
+    partial class added_specialty_table_and_updated_doctor_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,32 +137,6 @@ namespace iDoctor.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("iDoctor.Domain.Entities.Education", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FieldOfStudy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UniversityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Educations");
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Gender", b =>
@@ -327,98 +304,6 @@ namespace iDoctor.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specialties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Kardiologiya"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Nevrologiya"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Dermatologiya"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Pediatriya"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Onkologiya"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Ginekologiya"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Travmatologiya"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Ortopediya"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Oftalmologiya"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Endokrinologiya"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Cərrahiyyə"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Urologiya"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Nefrologiya"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Psixiatriya"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Pulmonologiya"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Hematologiya"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Reabilitasiya"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Rheumatologiya"
-                        });
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.User", b =>
@@ -476,17 +361,6 @@ namespace iDoctor.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("iDoctor.Domain.Entities.Education", b =>
-                {
-                    b.HasOne("iDoctor.Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Educations")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("iDoctor.Domain.Entities.Patient", b =>
                 {
                     b.HasOne("iDoctor.Domain.Entities.BloodType", "BloodType")
@@ -519,11 +393,6 @@ namespace iDoctor.Persistence.Migrations
             modelBuilder.Entity("iDoctor.Domain.Entities.BloodType", b =>
                 {
                     b.Navigation("Patients");
-                });
-
-            modelBuilder.Entity("iDoctor.Domain.Entities.Doctor", b =>
-                {
-                    b.Navigation("Educations");
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Gender", b =>

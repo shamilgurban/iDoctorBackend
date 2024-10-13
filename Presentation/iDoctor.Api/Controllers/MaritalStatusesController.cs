@@ -18,7 +18,7 @@ namespace iDoctor.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllMaritalStatuss()
+        public async Task<IActionResult> GetAllMaritalStatuses()
         {
             var maritalStatuses = await _maritalStatusService.GetAllAsync();
             return Ok(maritalStatuses);

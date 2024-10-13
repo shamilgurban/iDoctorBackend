@@ -1,5 +1,6 @@
 ﻿
 
+using iDoctor.Application.Dtos.EducationDtos;
 using Microsoft.AspNetCore.Http;
 
 namespace iDoctor.Application.Dtos.DoctorDtos
@@ -16,6 +17,10 @@ namespace iDoctor.Application.Dtos.DoctorDtos
         public string? District { get; set; }
         public string? Country { get; set; }
         public int? ZipCode { get; set; }
+        public string ClinicName { get; set; }
+        public string ClinicAddress { get; set; }
+        public int SpecialtyId { get; set; }
+        public List<CreateEducationDto> Educations { get; set; }
         public IFormFile? Image { get; set; }
 
 

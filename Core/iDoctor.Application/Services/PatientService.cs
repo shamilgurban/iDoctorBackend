@@ -50,13 +50,13 @@ namespace iDoctor.Application.Services
 
         public async Task<List<ResultPatientDto>> GetAllAsync(bool tracking = true)
         {
-            var patients = await _patientRepository.GetAllAsync(tracking,p=>p.User,p=>p.MaritalStatus,p=>p.BloodType,p=>p.Gender);
+            var patients = await _patientRepository.GetAllAsync(tracking);
             return _mapper.Map<List<ResultPatientDto>>(patients);
         }
 
         public async Task<ResultPatientDto> GetByIdAsync(int id, bool tracking = true)
         {
-            var patient = await _patientRepository.GetByIdAsync(id,tracking,p=>p.User, p => p.MaritalStatus, p => p.BloodType, p => p.Gender);
+            var patient = await _patientRepository.GetByIdAsync(id,tracking);
 
             if (patient is null) return null;
             
@@ -65,7 +65,7 @@ namespace iDoctor.Application.Services
 
         public async Task<ResultPatientDto> GetSingleAsync(Expression<Func<Patient, bool>> method, bool tracking = true)
         {
-            return _mapper.Map<ResultPatientDto>(await _patientRepository.GetSingleAsync(method,tracking,p=>p.User));
+            return _mapper.Map<ResultPatientDto>(await _patientRepository.GetSingleAsync(method,tracking));
         }
 
         public async Task<List<ResultPatientDto>> GetWhereAsync(Expression<Func<Patient, bool>> method, bool tracking = true)
@@ -77,7 +77,7 @@ namespace iDoctor.Application.Services
         {
             bool tracking = true;
 
-            var patient = await _patientRepository.GetByIdAsync(id,tracking, p => p.User);
+            var patient = await _patientRepository.GetByIdAsync(id,tracking);
 
             if (patient == null) return false;
             
@@ -85,7 +85,7 @@ namespace iDoctor.Application.Services
 
             if (user is null) return false;
            
-            await _userRepository.RemoveAsync(user);
+             _userRepository.Remove(user);
             await _userRepository.SaveAsync();
 
             return true;
@@ -96,7 +96,7 @@ namespace iDoctor.Application.Services
                 
             bool tracking = true;
 
-            var patient = await _patientRepository.GetByIdAsync(id,tracking,p=>p.User);
+            var patient = await _patientRepository.GetByIdAsync(id,tracking);
 
             if (patient == null) return false;
           
@@ -114,7 +114,7 @@ namespace iDoctor.Application.Services
             }
           
 
-            await _patientRepository.UpdateAsync(patient);
+             _patientRepository.Update(patient);
             await _patientRepository.SaveAsync();
 
             return true;

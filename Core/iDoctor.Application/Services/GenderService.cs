@@ -59,7 +59,7 @@ namespace iDoctor.Application.Services
 
             if (gender == null) return false;
 
-            await _genderRepository.RemoveAsync(gender);
+             _genderRepository.Remove(gender);
             await _genderRepository.SaveAsync();
 
             return true;
@@ -73,7 +73,7 @@ namespace iDoctor.Application.Services
             
             _mapper.Map(model, gender);
 
-            await _genderRepository.UpdateAsync(gender);
+             _genderRepository.Update(gender);
             await _genderRepository.SaveAsync();
 
             return true;
