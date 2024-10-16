@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
+using iDoctor.Application.Dtos.BloodTypeDtos;
 using iDoctor.Application.Dtos.DoctorDtos;
+using iDoctor.Application.Dtos.EducationDtos;
+using iDoctor.Application.Dtos.GenderDtos;
+using iDoctor.Application.Dtos.MaritalStatusDtos;
 using iDoctor.Application.Dtos.PatientDtos;
 using iDoctor.Application.Dtos.RoleDtos;
+using iDoctor.Application.Dtos.SpecialtyDtos;
 using iDoctor.Application.Dtos.UserDtos;
 using iDoctor.Domain.Entities;
 
@@ -14,6 +19,26 @@ namespace iDoctor.Application.Mappings
             CreateMap<Role, ResultRoleDto>();
             CreateMap<CreateRoleDto, Role>();
             CreateMap<UpdateRoleDto, Role>();
+
+            CreateMap<Gender, ResultGenderDto>();
+            CreateMap<CreateGenderDto, Gender>();
+            CreateMap<UpdateGenderDto, Gender>();
+
+            CreateMap<MaritalStatus, ResultMaritalStatusDto>();
+            CreateMap<CreateMaritalStatusDto, MaritalStatus>();
+            CreateMap<UpdateMaritalStatusDto, MaritalStatus>();
+
+            CreateMap<BloodType, ResultBloodTypeDto>();
+            CreateMap<CreateBloodTypeDto, BloodType>();
+            CreateMap<UpdateBloodTypeDto, BloodType>();
+
+            CreateMap<Specialty, ResultSpecialtyDto>();
+            CreateMap<CreateSpecialtyDto, Specialty>();
+            CreateMap<UpdateSpecialtyDto, Specialty>();
+
+            CreateMap<Education, ResultEducationDto>();
+            CreateMap<CreateEducationDto, Education>();
+            CreateMap<UpdateEducationDto, Education>();
 
             CreateMap<User,ResultUserDto>();
             CreateMap<RegisterDto,User>().ForMember(dest => dest.HashedPassword, 
@@ -33,12 +58,21 @@ namespace iDoctor.Application.Mappings
                                                   .ForMember(dest => dest.Email,
                                                     opt => opt.MapFrom(src => src.User.Email))
                                                   .ForMember(dest => dest.Image,
-                                                    opt => opt.MapFrom(src => src.User.Image));
+                                                    opt => opt.MapFrom(src => src.User.Image))
+                                                  .ForMember(dest => dest.Phone,
+                                                    opt => opt.MapFrom(src => src.User.Phone))
+                                                  .ForMember(dest => dest.Gender,
+                                                    opt => opt.MapFrom(src => src.Gender.Name))
+                                                  .ForMember(dest => dest.BloodType,
+                                                    opt => opt.MapFrom(src => src.BloodType.Type))
+                                                  .ForMember(dest => dest.MartialStatus,
+                                                    opt => opt.MapFrom(src => src.MaritalStatus.Status));
 
             CreateMap<UpdatePatientDto, Patient>()
                                                 .ForPath(dest => dest.User.Name, opt => opt.MapFrom(src => src.Name))
                                                 .ForPath(dest => dest.User.Surname, opt => opt.MapFrom(src => src.Surname))
-                                                .ForPath(dest => dest.User.Email, opt => opt.MapFrom(src => src.Email));
+                                                .ForPath(dest => dest.User.Email, opt => opt.MapFrom(src => src.Email))
+                                                .ForPath(dest => dest.User.Phone, opt => opt.MapFrom(src => src.Phone));
 
 
 
@@ -48,13 +82,20 @@ namespace iDoctor.Application.Mappings
                                                     opt => opt.MapFrom(src => src.User.Surname))
                                                   .ForMember(dest => dest.Email,
                                                     opt => opt.MapFrom(src => src.User.Email))
-                                                   .ForMember(dest => dest.Image,
-                                                    opt => opt.MapFrom(src => src.User.Image));
+                                                  .ForMember(dest => dest.Image,
+                                                    opt => opt.MapFrom(src => src.User.Image))
+                                                  .ForMember(dest => dest.Phone,
+                                                    opt => opt.MapFrom(src => src.User.Phone))
+                                                   .ForMember(dest => dest.SpecialtyName,
+                                                    opt => opt.MapFrom(src => src.Specialty.Name));
 
             CreateMap<UpdateDoctorDto, Doctor>()
                                                 .ForPath(dest => dest.User.Name, opt => opt.MapFrom(src => src.Name))
                                                 .ForPath(dest => dest.User.Surname, opt => opt.MapFrom(src => src.Surname))
-                                                .ForPath(dest => dest.User.Email, opt => opt.MapFrom(src => src.Email));
+                                                .ForPath(dest => dest.User.Email, opt => opt.MapFrom(src => src.Email))
+                                                .ForPath(dest => dest.User.Phone, opt => opt.MapFrom(src => src.Phone))
+                                                .ForPath(dest => dest.Educations, opt => opt.MapFrom(src => src.Educations));
+
         }
     }
 }

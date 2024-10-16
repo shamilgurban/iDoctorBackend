@@ -32,7 +32,7 @@ namespace iDoctor.Api.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<IActionResult> GetRoleById([FromRoute] int id)
+        public async Task<IActionResult> GetDoctorById([FromRoute] int id)
         {
             var doctor = await _doctorService.GetByIdAsync(id);
 
@@ -50,26 +50,18 @@ namespace iDoctor.Api.Controllers
         public async Task<IActionResult> UpdateDoctor(int id, [FromForm] UpdateDoctorDto request)
         {
             UpdateDoctorValidator validator = new UpdateDoctorValidator();
-            ValidationResult validationResult = validator.Validate(request);
+            ValidationResult validationResult = validator.Validate(request);        
 
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
             var user = await _userService.GetSingleAsync(m => m.Email == request.Email && ((m.Patient != null) || (m.Doctor.Id != id)));
             
-            if (user is not null)
-            {
-                return BadRequest(new { Message = "This Email Already Taken" });
-            }
+            if (user is not null) return BadRequest(new { Message = "This Email Already Taken" });
+         
             var result = await _doctorService.UpdateAsync(id, request);
 
-            if (!result)
-            {
-                return NotFound(new { Message = "Doctor Not Found" });
-            }
-
+            if (!result) return NotFound(new { Message = "Doctor Not Found" });
+          
             return Ok(new { Message = "Doctor Updated Successfully" });
         }
 

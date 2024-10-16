@@ -60,7 +60,7 @@ namespace iDoctor.Application.Services
                 return false;
             }
 
-            await _roleRepository.RemoveAsync(role);
+             _roleRepository.Remove(role);
             await _roleRepository.SaveAsync();
 
             return true;
@@ -76,7 +76,7 @@ namespace iDoctor.Application.Services
             }
             _mapper.Map(model, role);
 
-            await _roleRepository.UpdateAsync(role);
+             _roleRepository.Update(role);
             await _roleRepository.SaveAsync();
 
             return true;

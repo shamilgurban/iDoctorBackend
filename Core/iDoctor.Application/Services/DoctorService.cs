@@ -17,20 +17,20 @@ namespace iDoctor.Application.Services
         private readonly IDoctorRepository _doctorRepository;
         private readonly IPasswordService _passwordService;
         private readonly IUserRepository _userRepository;
-        private readonly IHostEnvironment _hostEnvironment;
+        private readonly IEducationRepository _educationRepository;
         private readonly IMapper _mapper;
 
         public DoctorService(IDoctorRepository doctorRepository,
                            IMapper mapper,
                            IPasswordService passwordService,
                            IUserRepository userRepository,
-                           IHostEnvironment hostEnvironment)
+                           IEducationRepository educationRepository)
         {
             _doctorRepository = doctorRepository;
             _mapper = mapper;
             _passwordService = passwordService;
             _userRepository = userRepository;
-            _hostEnvironment = hostEnvironment;
+            _educationRepository = educationRepository;
         }
 
         public async Task<bool> RegisterAsync(RegisterDoctorDto model)
@@ -76,13 +76,13 @@ namespace iDoctor.Application.Services
 
         public async Task<List<ResultDoctorDto>> GetAllAsync(bool tracking = true)
         {
-            var doctors = await _doctorRepository.GetAllAsync(tracking, d => d.User);
+            var doctors = await _doctorRepository.GetAllAsync(tracking);
             return _mapper.Map<List<ResultDoctorDto>>(doctors);
         }
 
         public async Task<ResultDoctorDto> GetByIdAsync(int id, bool tracking = true)
         {
-            var doctor = await _doctorRepository.GetByIdAsync(id, tracking, d => d.User);
+            var doctor = await _doctorRepository.GetByIdAsync(id, tracking);
 
             if (doctor is null) return null;
 
@@ -91,12 +91,12 @@ namespace iDoctor.Application.Services
 
         public async Task<ResultDoctorDto> GetSingleAsync(Expression<Func<Doctor, bool>> method, bool tracking = true)
         {
-            return _mapper.Map<ResultDoctorDto>(await _doctorRepository.GetSingleAsync(method, tracking, p => p.User));
+            return _mapper.Map<ResultDoctorDto>(await _doctorRepository.GetSingleAsync(method, tracking));
         }
 
         public async Task<List<ResultDoctorDto>> GetWhereAsync(Expression<Func<Doctor, bool>> method, bool tracking = true)
         {
-            var doctors = await _doctorRepository.GetWhereAsync(method, tracking, d => d.User);
+            var doctors = await _doctorRepository.GetWhereAsync(method, tracking);
 
             return _mapper.Map<List<ResultDoctorDto>>(doctors);
         }
@@ -105,7 +105,7 @@ namespace iDoctor.Application.Services
         {
             bool tracking = true;
 
-            var doctor = await _doctorRepository.GetByIdAsync(id, tracking, p => p.User);
+            var doctor = await _doctorRepository.GetByIdAsync(id, tracking);
 
             if (doctor == null) return false;
 
@@ -120,7 +120,7 @@ namespace iDoctor.Application.Services
                 File.Delete(verificationDocumentPath);
             }
 
-            await _userRepository.RemoveAsync(user);
+             _userRepository.Remove(user);
             await _userRepository.SaveAsync();
 
             return true;
@@ -131,7 +131,7 @@ namespace iDoctor.Application.Services
 
             bool tracking = true;
 
-            var doctor = await _doctorRepository.GetByIdAsync(id, tracking, p => p.User);
+            var doctor = await _doctorRepository.GetByIdAsync(id, tracking);
 
             if (doctor == null) return false;
 
@@ -141,13 +141,19 @@ namespace iDoctor.Application.Services
 
             doctor.User.HashedPassword = existingHashedPassword;
 
+
+            var existEducations = await _educationRepository.GetWhereAsync(e => e.DoctorId == id);
+
+            if (existEducations is not null) _educationRepository.RemoveRange(existEducations);
+
             if (model.Image != null && model.Image.Length > 0)
             {
-                var base64Image = model.Image.ToBase64();
-                doctor.User.Image = $"data:image/jpeg;base64,{base64Image}";
+                var base64image = model.Image.ToBase64();
+                doctor.User.Image = $"data:image/jpeg;base64,{base64image}";
             }
 
-            await _doctorRepository.UpdateAsync(doctor);
+            _doctorRepository.Update(doctor);
+        
             await _doctorRepository.SaveAsync();
 
             return true;
@@ -160,7 +166,7 @@ namespace iDoctor.Application.Services
             if (doctor == null) return false;
 
             doctor.IsVerified = true;
-            await _doctorRepository.UpdateAsync(doctor);
+             _doctorRepository.Update(doctor);
             await _doctorRepository.SaveAsync();
 
             return true;

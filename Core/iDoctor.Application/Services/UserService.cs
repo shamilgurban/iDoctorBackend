@@ -57,7 +57,7 @@ namespace iDoctor.Application.Services
 
         public async Task<ResultUserDto> GetSingleAsync(Expression<Func<User, bool>> method, bool tracking = true)
         {
-            return _mapper.Map<ResultUserDto>(await _userRepository.GetSingleAsync(method,tracking,u=>u.Patient,u=>u.Doctor));
+            return _mapper.Map<ResultUserDto>(await _userRepository.GetSingleAsync(method,tracking));
         }
 
         public async Task<List<ResultUserDto>> GetWhereAsync(Expression<Func<User, bool>> method, bool tracking = true)
@@ -71,7 +71,7 @@ namespace iDoctor.Application.Services
 
             if (user == null) return false;
             
-            await _userRepository.RemoveAsync(user);
+             _userRepository.Remove(user);
             await _userRepository.SaveAsync();
 
             return true;
@@ -85,7 +85,7 @@ namespace iDoctor.Application.Services
        
             _mapper.Map(model, user);
 
-            await _userRepository.UpdateAsync(user);
+             _userRepository.Update(user);
             await _userRepository.SaveAsync();
 
             return true;
@@ -95,7 +95,7 @@ namespace iDoctor.Application.Services
         {
             var tracking = true; 
 
-            var user = await _userRepository.GetSingleAsync(m => m.Email == model.Email,tracking,u=>u.Doctor);
+            var user = await _userRepository.GetSingleAsync(m => m.Email == model.Email,tracking);
 
             if(user is null) return null;
 

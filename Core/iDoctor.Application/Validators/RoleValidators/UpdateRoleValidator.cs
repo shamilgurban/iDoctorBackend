@@ -11,6 +11,7 @@ namespace iDoctor.Application.Validators.RoleValidators
             RuleFor(x => x.Name)
              .NotEmpty().WithMessage("Role name is required.")
              .Length(2, 50).WithMessage("Role name must be between 2 and 50 characters.");
+
             RuleFor(x => x.UserType)
              .NotEmpty().WithMessage("Type is required."); 
         }

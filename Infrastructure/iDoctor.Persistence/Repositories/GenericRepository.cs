@@ -19,8 +19,12 @@ namespace iDoctor.Persistence.Repositories
 
         public async Task AddAsync(T model)
         {
-            await Table.AddAsync(model);
-          
+            await Table.AddAsync(model);          
+        }
+
+        public async Task AddRangeAsync(List<T> models)
+        {
+            await Table.AddRangeAsync(models);
         }
 
         public async Task<List<T>> GetAllAsync(bool tracking = true, params Expression<Func<T, object>>[] includes)
@@ -91,18 +95,21 @@ namespace iDoctor.Persistence.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task RemoveAsync(T model)
+        public void Remove(T model)
         {
-            Table.Remove(model);
-           
+            Table.Remove(model);        
+        }
+
+        public void RemoveRange(List<T> models)
+        {
+           Table.RemoveRange(models);
         }
 
         public async Task SaveAsync() => await _context.SaveChangesAsync();
 
-        public async Task UpdateAsync(T model)
+        public void Update(T model)
         {
-           Table.Update(model);
-          
+           Table.Update(model);         
         }
     }
 }
