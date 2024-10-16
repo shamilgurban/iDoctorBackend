@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using iDoctor.Application.Dtos.DoctorDtos;
+using Microsoft.AspNetCore.Http;
+using Org.BouncyCastle.X509;
 
 
 namespace iDoctor.Application.Validators.DoctorValidators
@@ -31,6 +33,26 @@ namespace iDoctor.Application.Validators.DoctorValidators
             RuleFor(x => x.ConfirmPassword)
            .NotEmpty().WithMessage("Confirm Password is required.")
            .Equal(x => x.Password).WithMessage("Passwords do not match.");
+
+            RuleFor(x => x.VerificationDocument)
+                .Must(BeValidDocument)
+                .When(x => x.VerificationDocument != null)
+                .WithMessage("Document must be a valid PDF, TXT, DOC or DOCX and less than 10MB");
+        }
+
+        private bool BeValidDocument(IFormFile? file)
+        {
+            if (file == null) return false;
+
+            const long maxDocSizeInBytes = 10 * 1024 * 1024;
+
+            if(file.Length>maxDocSizeInBytes) return false;
+
+            var allowedDocExtensions= new[] {".pdf",".txt",".doc",".docx"};
+
+            var fileExtensions = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            return allowedDocExtensions.Contains(fileExtensions);
         }
     }
 }

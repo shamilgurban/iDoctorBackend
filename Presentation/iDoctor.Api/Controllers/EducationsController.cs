@@ -1,4 +1,5 @@
 ﻿using iDoctor.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,15 +16,17 @@ namespace iDoctor.Api.Controllers
             _educationService = educationService;
         }
 
+        [Authorize(Roles = "GetAllEducations")]
         [HttpGet]
+
         public async Task<IActionResult> GetAllEducations()
         {
             var educations = await _educationService.GetAllAsync();
             return Ok(educations);
         }
 
+        [Authorize(Roles = "GetEducationById")]
         [HttpGet("{id}")]
-
         public async Task<IActionResult> GetEducationById([FromRoute] int id)
         {
             var education = await _educationService.GetByIdAsync(id);
@@ -33,8 +36,8 @@ namespace iDoctor.Api.Controllers
             return Ok(education);
         }
 
+        [Authorize(Roles = "GetEducationsByDoctorId")]
         [HttpGet("{id}")]
-
         public async Task<IActionResult> GetEducationsByDoctorId([FromRoute]int id)
         {
             var educations=await _educationService.GetWhereAsync(e=>e.DoctorId==id);

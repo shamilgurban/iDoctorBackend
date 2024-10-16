@@ -2,6 +2,7 @@
 using iDoctor.Application.Dtos.MaritalStatusDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.MaritalStatusValidatos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers
@@ -17,6 +18,7 @@ namespace iDoctor.Api.Controllers
             _maritalStatusService = maritalStatusService;
         }
 
+        [Authorize(Roles = "GetAllMaritalStatuses")]
         [HttpGet]
         public async Task<IActionResult> GetAllMaritalStatuses()
         {
@@ -24,6 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(maritalStatuses);
         }
 
+        [Authorize(Roles = "GetMaritalStatusById")]
         [HttpGet("{id}")]
 
         public async Task<IActionResult> GetMaritalStatusById([FromRoute] int id)
@@ -35,6 +38,7 @@ namespace iDoctor.Api.Controllers
             return Ok(maritalStatus);
         }
 
+        [Authorize(Roles = "CreateMaritalStatus")]
         [HttpPost]
 
         public async Task<IActionResult> CreateMaritalStatus([FromBody] CreateMaritalStatusDto request)
@@ -53,6 +57,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Marital Status Created Successfully" });
         }
 
+
+        [Authorize(Roles = "UpdateMaritalStatus")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateMaritalStatus(int id, [FromBody] UpdateMaritalStatusDto request)
@@ -73,6 +79,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Marital Status Updated Successfully" });
         }
 
+        [Authorize(Roles = "DeleteMaritalStatus")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteMaritalStatus(int id)

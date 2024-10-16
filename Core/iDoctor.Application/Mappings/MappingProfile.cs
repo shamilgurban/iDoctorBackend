@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using iDoctor.Application.Dtos.AnalysisDtos;
+using iDoctor.Application.Dtos.AppointmentDtos;
 using iDoctor.Application.Dtos.BloodTypeDtos;
 using iDoctor.Application.Dtos.DoctorDtos;
 using iDoctor.Application.Dtos.EducationDtos;
@@ -8,6 +10,7 @@ using iDoctor.Application.Dtos.PatientDtos;
 using iDoctor.Application.Dtos.RoleDtos;
 using iDoctor.Application.Dtos.SpecialtyDtos;
 using iDoctor.Application.Dtos.UserDtos;
+using iDoctor.Application.Helpers.Enums;
 using iDoctor.Domain.Entities;
 
 namespace iDoctor.Application.Mappings
@@ -40,7 +43,13 @@ namespace iDoctor.Application.Mappings
             CreateMap<CreateEducationDto, Education>();
             CreateMap<UpdateEducationDto, Education>();
 
-            CreateMap<User,ResultUserDto>();
+            CreateMap<Analysis, ResultAnalysisDto>();
+            CreateMap<CreateAnalysisDto, Analysis>();
+            CreateMap<UpdateAnalysisDto, Analysis>();
+
+            CreateMap<User, ResultUserDto>().ForMember(dest => dest.Type,
+                                                            opt => opt.MapFrom(src => ((UserTypes)src.Type).ToString()));
+
             CreateMap<RegisterDto,User>().ForMember(dest => dest.HashedPassword, 
                                                     opt => opt.MapFrom(src => src.Password));
             CreateMap<RegisterPatientDto, User>().ForMember(dest => dest.HashedPassword,
@@ -96,6 +105,17 @@ namespace iDoctor.Application.Mappings
                                                 .ForPath(dest => dest.User.Phone, opt => opt.MapFrom(src => src.Phone))
                                                 .ForPath(dest => dest.Educations, opt => opt.MapFrom(src => src.Educations));
 
+
+            CreateMap<CreateAppointmentDto, Appointment>();
+            CreateMap<UpdateAppointmentDto, Appointment>();
+            CreateMap<Appointment, ResultAppointmentDto>().ForMember(dest => dest.PatientFullName,
+                                                           opt => opt.MapFrom(src => src.Patient.User.Name + " " + src.Patient.User.Surname))      
+                                                         .ForMember(dest => dest.DoctorFullName,
+                                                           opt => opt.MapFrom(src => src.Doctor.User.Name + " " + src.Doctor.User.Surname))
+                                                         .ForMember(dest => dest.AnalysisName,
+                                                           opt => opt.MapFrom(src => src.Analysis.Name))
+                                                          .ForMember(dest => dest.Status,
+                                                            opt => opt.MapFrom(src => ((AppointmentStatus)src.Status).ToString()));
         }
     }
 }

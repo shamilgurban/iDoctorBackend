@@ -2,6 +2,7 @@
 using iDoctor.Application.Dtos.GenderDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.GenderValidators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers
@@ -17,6 +18,7 @@ namespace iDoctor.Api.Controllers
             _genderService = genderService;
         }
 
+        [Authorize(Roles = "GetAllGenders")]
         [HttpGet]
         public async Task<IActionResult> GetAllGenders()
         {
@@ -24,8 +26,9 @@ namespace iDoctor.Api.Controllers
             return Ok(genders);
         }
 
+        [Authorize(Roles = "GetGenderById")]
         [HttpGet("{id}")]
-
+      
         public async Task<IActionResult> GetGenderById([FromRoute] int id)
         {
             var gender = await _genderService.GetByIdAsync(id);
@@ -35,8 +38,8 @@ namespace iDoctor.Api.Controllers
             return Ok(gender);
         }
 
+        [Authorize(Roles = "CreateGender")]
         [HttpPost]
-
         public async Task<IActionResult> CreateGender([FromBody] CreateGenderDto request)
         {
             CreateGenderValidator validator = new CreateGenderValidator();
@@ -53,8 +56,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Gender Created Successfully" });
         }
 
-        [HttpPut("{id}")]
-
+        [Authorize(Roles = "UpdateGender")]
+        [HttpPut("{id}")]      
         public async Task<IActionResult> UpdateGender(int id, [FromBody] UpdateGenderDto request)
         {
             UpdateGenderValidator validator = new UpdateGenderValidator();
@@ -73,8 +76,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Gender Updated Successfully" });
         }
 
+        [Authorize(Roles = "DeleteGender")]
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeleteGender(int id)
         {
             var result = await _genderService.RemoveAsync(id);

@@ -14,5 +14,7 @@ namespace iDoctor.Domain.Entities
         public virtual MaritalStatus MaritalStatus { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Appointment> Appointments { get; set; }
+
     }
 }

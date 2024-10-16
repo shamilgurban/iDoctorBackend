@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using iDoctor.Application.Dtos.DoctorDtos;
 using iDoctor.Application.Validators.EducationValidators;
+using Microsoft.AspNetCore.Http;
 
 
 namespace iDoctor.Application.Validators.DoctorValidators
@@ -42,8 +43,27 @@ namespace iDoctor.Application.Validators.DoctorValidators
             RuleForEach(d => d.Educations)
             .SetValidator(new CreateEducationValidator());
 
+            RuleFor(x => x.Image)
+              .Must(BeValidImage)
+              .When(x => x.Image != null)
+              .WithMessage("Image must be a valid JPG, JPEG, PNG, or PDF and less than 5MB.");
 
 
+        }
+
+        private bool BeValidImage(IFormFile? file)
+        {
+            if (file == null) return false;
+
+            const long maxImageSizeInBytes = 5 * 1024 * 1024;
+
+            if (file.Length > maxImageSizeInBytes) return false;
+
+            var allowedImageExtensions = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
+
+            var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            return allowedImageExtensions.Contains(fileExtension);
         }
     }
 }

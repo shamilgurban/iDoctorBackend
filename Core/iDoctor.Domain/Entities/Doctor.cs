@@ -19,5 +19,6 @@ namespace iDoctor.Domain.Entities
         public int? SpecialtyId { get; set; }
         public virtual Specialty Specialty { get; set; }
         public virtual ICollection<Education> Educations { get; set; }
+        public virtual ICollection<Appointment>Appointments { get; set; }
     }
 }

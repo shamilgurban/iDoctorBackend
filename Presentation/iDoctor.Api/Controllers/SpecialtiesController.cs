@@ -2,6 +2,7 @@
 using iDoctor.Application.Dtos.SpecialtyDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.SpecialtyValidators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers
@@ -17,6 +18,7 @@ namespace iDoctor.Api.Controllers
             _specialtyService = specialtyService;
         }
 
+        [Authorize(Roles = "GetAllSpecialties")]
         [HttpGet]
         public async Task<IActionResult> GetAllSpecialties()
         {
@@ -24,6 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(specialties);
         }
 
+        [Authorize(Roles = "GetSpecialtyById")]
         [HttpGet("{id}")]
 
         public async Task<IActionResult> GetSpecialtyById([FromRoute] int id)
@@ -35,6 +38,7 @@ namespace iDoctor.Api.Controllers
             return Ok(specialty);
         }
 
+        [Authorize(Roles = "CreateSpecialty")]
         [HttpPost]
 
         public async Task<IActionResult> CreateSpecialty([FromBody] CreateSpecialtyDto request)
@@ -53,6 +57,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Specialty Created Successfully" });
         }
 
+        [Authorize(Roles = "UpdateSpecialty")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateSpecialty(int id, [FromBody] UpdateSpecialtyDto request)
@@ -73,8 +78,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Specialty Updated Successfully" });
         }
 
+        [Authorize(Roles = "DeleteSpecialty")]
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeleteSpecialty(int id)
         {
             var result = await _specialtyService.RemoveAsync(id);

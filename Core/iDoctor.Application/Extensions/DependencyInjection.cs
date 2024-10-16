@@ -20,6 +20,8 @@ namespace iDoctor.Application.Extensions
             services.AddScoped<IBloodTypeService, BloodTypeService>();
             services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IEducationService, EducationService>();
+            services.AddScoped<IAnalysisService, AnalysisService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             return services;
         }

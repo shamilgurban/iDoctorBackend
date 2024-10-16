@@ -1,6 +1,4 @@
-﻿
-
-namespace iDoctor.Application.Dtos.DoctorDtos
+﻿namespace iDoctor.Application.Dtos.EmailDtos
 {
     public class EmailDto
     {

@@ -1,11 +1,13 @@
 ﻿using FluentValidation.Results;
 using iDoctor.Application.Dtos.DoctorDtos;
+using iDoctor.Application.Dtos.EmailDtos;
 using iDoctor.Application.Dtos.PatientDtos;
 using iDoctor.Application.Dtos.UserDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.DoctorValidators;
 using iDoctor.Application.Validators.PatientValidators;
 using iDoctor.Application.Validators.UserValidators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers
@@ -30,7 +32,9 @@ namespace iDoctor.Api.Controllers
             _emailService = emailService;
         }
 
+        [Authorize(Roles = "GetAllUsers")]
         [HttpGet]
+
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllAsync();
@@ -61,7 +65,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "User Created Successfully" });
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> RegisterPatient([FromBody] RegisterPatientDto request)
         {
@@ -85,17 +89,15 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Patient Created Successfully" });
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> RegisterDoctor([FromForm] RegisterDoctorDto request)
         {
             RegisterDoctorValidator validator = new RegisterDoctorValidator();
             ValidationResult validationResult = validator.Validate(request);
 
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
-
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+           
             var user = await _userService.GetSingleAsync(m => m.Email == request.Email);
 
             if (user is not null) return BadRequest(new { Message = "This Email Already Used" });
@@ -115,7 +117,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Doctor Created Successfully" });
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginDto request)
         {

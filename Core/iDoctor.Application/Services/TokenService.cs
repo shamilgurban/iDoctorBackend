@@ -26,6 +26,7 @@ namespace iDoctor.Application.Services
             {
             new Claim(JwtRegisteredClaimNames.Sub, request.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+         
             };
 
             request.Roles.ForEach(role =>
@@ -34,6 +35,7 @@ namespace iDoctor.Application.Services
             });
 
             claims.Add(new Claim("UserType", request.UserType));
+            claims.Add(new Claim("UserId", request.Id.ToString()));
 
             var creds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 

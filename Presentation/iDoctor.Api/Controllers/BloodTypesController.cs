@@ -2,6 +2,7 @@
 using iDoctor.Application.Dtos.BloodTypeDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.BloodTypeValidators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers
@@ -17,6 +18,7 @@ namespace iDoctor.Api.Controllers
             _bloodTypeService = bloodTypeService;
         }
 
+        [Authorize(Roles = "GetAllBloodTypes")]
         [HttpGet]
         public async Task<IActionResult> GetAllBloodTypes()
         {
@@ -24,8 +26,8 @@ namespace iDoctor.Api.Controllers
             return Ok(bloodTypes);
         }
 
+        [Authorize(Roles = "GetBloodTypeById")]
         [HttpGet("{id}")]
-
         public async Task<IActionResult> GetBloodTypeById([FromRoute] int id)
         {
             var bloodType = await _bloodTypeService.GetByIdAsync(id);
@@ -35,6 +37,7 @@ namespace iDoctor.Api.Controllers
             return Ok(bloodType);
         }
 
+        [Authorize(Roles = "CreateBloodType")]
         [HttpPost]
 
         public async Task<IActionResult> CreateBloodType([FromBody] CreateBloodTypeDto request)
@@ -53,6 +56,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Blood Type Created Successfully" });
         }
 
+
+        [Authorize(Roles = "UpdateBloodType")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateBloodType(int id, [FromBody] UpdateBloodTypeDto request)
@@ -73,6 +78,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Blood Type Updated Successfully" });
         }
 
+        [Authorize(Roles = "DeleteBloodType")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteBloodType(int id)
