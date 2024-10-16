@@ -8,6 +8,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using iDoctor.Api.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,7 +52,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwagger();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddRepositoryLayer();
@@ -69,6 +70,7 @@ app.UseCors();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

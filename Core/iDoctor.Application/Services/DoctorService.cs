@@ -43,7 +43,7 @@ namespace iDoctor.Application.Services
                 Surname = model.Surname,
                 Email = model.Email,
                 HashedPassword = _passwordService.HashPassword(model.Password),
-                Type = (int)UserTypes.Doctor
+                Type = (int)UserTypes.Doctor,              
             };
 
             var fileName = $"{model.Email}_{model.VerificationDocument.FileName}";
@@ -58,7 +58,7 @@ namespace iDoctor.Application.Services
             var doctor = new Doctor
             {
                 User = user,
-                IsVerified = false,
+                IsVerified = true,
                 VerificationDocumentPath = fileName
             };
 
@@ -111,9 +111,11 @@ namespace iDoctor.Application.Services
 
             if (user is null) return false;
 
-            if (!string.IsNullOrEmpty(verificationDocumentPath) && File.Exists(verificationDocumentPath))
+            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", verificationDocumentPath);
+
+            if (!string.IsNullOrEmpty(verificationDocumentPath) && File.Exists(absolutePath))
             {
-                File.Delete(verificationDocumentPath);
+                File.Delete(absolutePath);
             }
 
              _userRepository.Remove(user);

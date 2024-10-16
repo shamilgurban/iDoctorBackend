@@ -1,8 +1,9 @@
 ﻿using FluentValidation.Results;
 using iDoctor.Application.Dtos.DoctorDtos;
+using iDoctor.Application.Dtos.EmailDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.DoctorValidators;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iDoctor.Api.Controllers
@@ -22,6 +23,7 @@ namespace iDoctor.Api.Controllers
             _emailService = emailService;
         }
 
+        [Authorize(Roles = "GetAllDoctors")]
         [HttpGet]
         public async Task<IActionResult> GetAllDoctors()
         {
@@ -30,8 +32,8 @@ namespace iDoctor.Api.Controllers
             return Ok(doctors);
         }
 
+        [Authorize(Roles = "GetDoctorById")]
         [HttpGet("{id}")]
-
         public async Task<IActionResult> GetDoctorById([FromRoute] int id)
         {
             var doctor = await _doctorService.GetByIdAsync(id);
@@ -44,9 +46,8 @@ namespace iDoctor.Api.Controllers
             return Ok(doctor);
         }
 
-
+        [Authorize(Roles = "UpdateDoctor")]
         [HttpPut("{id}")]
-
         public async Task<IActionResult> UpdateDoctor(int id, [FromForm] UpdateDoctorDto request)
         {
             UpdateDoctorValidator validator = new UpdateDoctorValidator();
@@ -65,8 +66,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Doctor Updated Successfully" });
         }
 
+        [Authorize(Roles = "DeleteDoctor")]
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeleteDoctor(int id)
         {
             var result = await _doctorService.RemoveAsync(id);
@@ -79,8 +80,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Doctor Deleted Successfully" });
         }
 
+        [Authorize(Roles = "VerifyDoctor")]
         [HttpPut("{id}")]
-
         public async Task<IActionResult>VerifyDoctor([FromRoute]int id)
         {
             var result=await _doctorService.VerifyDoctorAsync(id);
@@ -110,6 +111,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Doctor verified successfully." });
         }
 
+        [Authorize(Roles = "GetVerifiedDoctors")]
         [HttpGet]
         public async Task<IActionResult> GetVerifiedDoctors()
         {
@@ -117,6 +119,7 @@ namespace iDoctor.Api.Controllers
             return Ok(doctors);
         }
 
+        [Authorize(Roles = "GetUnVerifiedDoctors")]
         [HttpGet]
         public async Task<IActionResult> GetUnVerifiedDoctors()
         {

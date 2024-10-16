@@ -25,6 +25,138 @@ namespace iDoctor.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("iDoctor.Domain.Entities.Analysis", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Analyses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Qanın Biokimyəvi müayinələri"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sidiyin Biokimyəvi müayinələri"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Hemostaz müayinələri"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "İnfeksiyaların təyini"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "İmmunoloji müayinələr"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Bakterioloji müayinələr"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Molekulyar-bioloji müayinələr"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Allerqoloji müayinələr"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Onkomarker müayinələri"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Genetik Testlər"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Endokrinoloji müayinələr"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Toxuma biopsiyası"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Kardioloji testlər"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Hormon müayinələri"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "Autoimmun xəstəliklərin təyini"
+                        });
+                });
+
+            modelBuilder.Entity("iDoctor.Domain.Entities.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AnalysisDocumentPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AnalysisId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnalysisId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("iDoctor.Domain.Entities.BloodType", b =>
                 {
                     b.Property<int>("Id")
@@ -302,12 +434,384 @@ namespace iDoctor.Persistence.Migrations
                         {
                             Id = 4,
                             Name = "UpdatePatient",
-                            UserType = 2
+                            UserType = 3
                         },
                         new
                         {
                             Id = 5,
                             Name = "UpdateDoctor",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "RegisterAdmin",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "GetAllUsers",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "GetAllDoctors",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "GetVerifiedDoctors",
+                            UserType = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "GetDoctorById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "GetDoctorById",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "GetDoctorById",
+                            UserType = 3
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "DeleteDoctor",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "GetVerifiedDoctors",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "GetUnVerifiedDoctors",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "GetAllPatients",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "GetPatientById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Name = "GetPatientById",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Name = "DeletePatient",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Name = "GetAllAnalyses",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Name = "GetAllAnalyses",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Name = "GetAllAnalyses",
+                            UserType = 3
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Name = "GetAnalysisById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Name = "CreateAnalysis",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Name = "UpdateAnalysis",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Name = "DeleteAnalysis",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Name = "GetAllAppointments",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Name = "GetDoctorsAllAppointmentsById",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Name = "GetDoctorsPendingAppointmentsById",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Name = "GetAppointmentById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Name = "GetAppointmentById",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Name = "DeleteAppointment",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Name = "AcceptAppointment",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Name = "DeclineAppointment",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Name = "GetAllBloodTypes",
+                            UserType = 3
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Name = "GetAllBloodTypes",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Name = "GetBloodTypeById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Name = "CreateBloodType",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Name = "UpdateBloodType",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Name = "DeleteBloodType",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Name = "GetAllEducations",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Name = "GetEducationById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Name = "GetEducationsByDoctorId",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Name = "GetAllGenders",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Name = "GetAllGenders",
+                            UserType = 3
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Name = "GetGenderById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Name = "CreateGender",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Name = "UpdateGender",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Name = "DeleteGender",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Name = "GetAllMaritalStatuses",
+                            UserType = 3
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Name = "GetAllMaritalStatuses",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Name = "GetMaritalStatusById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Name = "CreateMaritalStatus",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Name = "UpdateMaritalStatus",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Name = "DeleteMaritalStatus",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Name = "GetAllRoles",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Name = "GetRoleById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Name = "CreateRole",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Name = "UpdateRole",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Name = "DeleteRole",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Name = "GetAllSpecialties",
+                            UserType = 2
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Name = "GetAllSpecialties",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Name = "GetSpecialtyById",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Name = "CreateSpecialty",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Name = "UpdateSpecialty",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Name = "DeleteSpecialty",
+                            UserType = 1
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Name = "GetPatientById",
                             UserType = 3
                         });
                 });
@@ -459,6 +963,33 @@ namespace iDoctor.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("iDoctor.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("iDoctor.Domain.Entities.Analysis", "Analysis")
+                        .WithMany("Appointments")
+                        .HasForeignKey("AnalysisId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("iDoctor.Domain.Entities.Doctor", "Doctor")
+                        .WithMany("Appointments")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("iDoctor.Domain.Entities.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Analysis");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("iDoctor.Domain.Entities.Doctor", b =>
                 {
                     b.HasOne("iDoctor.Domain.Entities.Specialty", "Specialty")
@@ -516,6 +1047,11 @@ namespace iDoctor.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("iDoctor.Domain.Entities.Analysis", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
             modelBuilder.Entity("iDoctor.Domain.Entities.BloodType", b =>
                 {
                     b.Navigation("Patients");
@@ -523,6 +1059,8 @@ namespace iDoctor.Persistence.Migrations
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Doctor", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("Educations");
                 });
 
@@ -534,6 +1072,11 @@ namespace iDoctor.Persistence.Migrations
             modelBuilder.Entity("iDoctor.Domain.Entities.MaritalStatus", b =>
                 {
                     b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("iDoctor.Domain.Entities.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Specialty", b =>

@@ -1,6 +1,4 @@
-﻿
-
-using iDoctor.Application.Dtos.DoctorDtos;
+﻿using iDoctor.Application.Dtos.EmailDtos;
 
 namespace iDoctor.Application.Services.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿using iDoctor.Application.Dtos.DoctorDtos;
+﻿using iDoctor.Application.Dtos.EmailDtos;
 using iDoctor.Application.Services.Interfaces;
 using MailKit.Net.Smtp;
 using MimeKit;

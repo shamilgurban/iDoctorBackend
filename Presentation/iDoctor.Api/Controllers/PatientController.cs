@@ -2,6 +2,7 @@
 using iDoctor.Application.Dtos.PatientDtos;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.PatientValidators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -20,6 +21,7 @@ namespace iDoctor.Api.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "GetAllPatients")]
         [HttpGet]
         public async Task<IActionResult> GetAllPatients()
         {
@@ -27,9 +29,9 @@ namespace iDoctor.Api.Controllers
             return Ok(patients);
         }
 
+        [Authorize(Roles = "GetPatientById")]
         [HttpGet("{id}")]
-
-        public async Task<IActionResult> GetRoleById([FromRoute] int id)
+        public async Task<IActionResult> GetPatientById([FromRoute] int id)
         {
             var patient = await _patientService.GetByIdAsync(id);
 
@@ -38,9 +40,8 @@ namespace iDoctor.Api.Controllers
             return Ok(patient);
         }
 
-
+        [Authorize(Roles = "UpdatePatient")]
         [HttpPut("{id}")]
-
         public async Task<IActionResult> UpdatePatient(int id, [FromForm] UpdatePatientDto request)
         {
             UpdatePatientDtoValidator validator = new UpdatePatientDtoValidator();
@@ -65,8 +66,8 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Patient Updated Successfully" });
         }
 
+        [Authorize(Roles = "DeletePatient")]
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeletePatient(int id)
         {
             var result = await _patientService.RemoveAsync(id);

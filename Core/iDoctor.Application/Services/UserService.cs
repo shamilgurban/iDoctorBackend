@@ -126,9 +126,16 @@ namespace iDoctor.Application.Services
                 }
             }
 
+            int id=user.Id;
+
+            if (userType == (int)UserTypes.Doctor) id = user.Doctor.Id;
+            
+            if(userType == (int)UserTypes.Patient) id= user.Patient.Id;
+          
+
             return _tokenService.GenerateJwtToken(new TokenCreateDto
             {
-               Id=user.Id,
+               Id=id,
                Email=user.Email,
                Roles=roleNames,
                UserType=type

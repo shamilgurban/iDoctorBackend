@@ -19,6 +19,8 @@ namespace iDoctor.Persistence.Extensions
             services.AddScoped<IMaritalStatusRepository, MaritalStatusRepository>();
             services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
             services.AddScoped<IEducationRepository, EducationRepository>();
+            services.AddScoped<IAnalysisRepository, AnalysisRepository>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             return services;
         }
     }
