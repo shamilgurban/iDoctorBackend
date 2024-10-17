@@ -18,7 +18,7 @@ namespace iDoctor.Api.Controllers
             _roleService = roleService;
         }
 
-        [Authorize(Roles = "GetAllRoles")]
+       // [Authorize(Roles = "GetAllRoles")]
         [HttpGet]
         public async Task<IActionResult> GetAllRoles()
         {
@@ -26,7 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(roles);
         }
 
-        [Authorize(Roles = "GetRoleById")]
+       // [Authorize(Roles = "GetRoleById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoleById([FromRoute] int id)
         {
@@ -40,7 +40,7 @@ namespace iDoctor.Api.Controllers
             return Ok(role);
         }
 
-        [Authorize(Roles = "CreateRole")]
+        //[Authorize(Roles = "CreateRole")]
         [HttpPost]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto request)
         {
@@ -64,7 +64,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new {Message="Role Created Successfully"});
         }
 
-        [Authorize(Roles = "UpdateRole")]
+        //[Authorize(Roles = "UpdateRole")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateRole(int id, [FromBody] UpdateRoleDto request)
@@ -92,7 +92,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Role Updated Successfully" });
         }
 
-        [Authorize(Roles = "DeleteRole")]
+        //[Authorize(Roles = "DeleteRole")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {

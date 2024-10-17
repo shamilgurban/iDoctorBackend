@@ -18,7 +18,7 @@ namespace iDoctor.Api.Controllers
             _analysisService = analysisService;
         }
 
-        [Authorize(Roles = "GetAllAnalyses")]
+        //[Authorize(Roles = "GetAllAnalyses")]
         [HttpGet]
         public async Task<IActionResult> GetAllAnalyses()
         {
@@ -26,7 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(analyses);
         }
 
-        [Authorize(Roles = "GetAnalysisById")]
+        //[Authorize(Roles = "GetAnalysisById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAnalysisById([FromRoute] int id)
         {
@@ -38,7 +38,7 @@ namespace iDoctor.Api.Controllers
         }
 
 
-        [Authorize(Roles = "CreateAnalysis")]
+        //[Authorize(Roles = "CreateAnalysis")]
         [HttpPost]
         public async Task<IActionResult> CreateAnalysis([FromBody] CreateAnalysisDto request)
         {
@@ -56,7 +56,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Analysis Created Successfully" });
         }
 
-        [Authorize(Roles = "UpdateAnalysis")]
+        //[Authorize(Roles = "UpdateAnalysis")]
         [HttpPut("{id}")]     
         public async Task<IActionResult> UpdateAnalysis(int id, [FromBody] UpdateAnalysisDto request)
         {
@@ -76,7 +76,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Analysis Updated Successfully" });
         }
 
-        [Authorize(Roles = "DeleteAnalysis")]
+        //[Authorize(Roles = "DeleteAnalysis")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnalysis(int id)
         {

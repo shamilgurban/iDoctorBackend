@@ -16,7 +16,7 @@ namespace iDoctor.Api.Controllers
             _educationService = educationService;
         }
 
-        [Authorize(Roles = "GetAllEducations")]
+        //[Authorize(Roles = "GetAllEducations")]
         [HttpGet]
 
         public async Task<IActionResult> GetAllEducations()
@@ -25,7 +25,7 @@ namespace iDoctor.Api.Controllers
             return Ok(educations);
         }
 
-        [Authorize(Roles = "GetEducationById")]
+        //[Authorize(Roles = "GetEducationById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEducationById([FromRoute] int id)
         {
@@ -36,7 +36,7 @@ namespace iDoctor.Api.Controllers
             return Ok(education);
         }
 
-        [Authorize(Roles = "GetEducationsByDoctorId")]
+        //[Authorize(Roles = "GetEducationsByDoctorId")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEducationsByDoctorId([FromRoute]int id)
         {

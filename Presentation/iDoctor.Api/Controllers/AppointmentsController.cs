@@ -25,7 +25,7 @@ namespace iDoctor.Api.Controllers
             _patientService = patientService;
         }
 
-        [Authorize(Roles = "GetAllAppointments")]
+        //[Authorize(Roles = "GetAllAppointments")]
         [HttpGet]
         public async Task<IActionResult> GetAllAppointments()
         {
@@ -33,7 +33,7 @@ namespace iDoctor.Api.Controllers
             return Ok(appointments);
         }
 
-        [Authorize(Roles = "GetDoctorsAllAppointmentsById")]
+        //[Authorize(Roles = "GetDoctorsAllAppointmentsById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDoctorsAllAppointmentsById([FromRoute] int id)
         {
@@ -41,7 +41,7 @@ namespace iDoctor.Api.Controllers
             return Ok(appointments);
         }
 
-        [Authorize(Roles = "GetDoctorsPendingAppointmentsById")]
+        //[Authorize(Roles = "GetDoctorsPendingAppointmentsById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDoctorsPendingAppointmentsById([FromRoute]int id)
         {
@@ -49,7 +49,7 @@ namespace iDoctor.Api.Controllers
             return Ok(appointments);
         }
 
-        [Authorize(Roles = "GetAppointmentById")]
+        //[Authorize(Roles = "GetAppointmentById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAppointmentById([FromRoute] int id)
         {
@@ -60,7 +60,7 @@ namespace iDoctor.Api.Controllers
             return Ok(appointment);
         }
 
-        [Authorize(Roles = "CreateAppointment")]
+        //[Authorize(Roles = "CreateAppointment")]
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromForm] CreateAppointmentDto request)
         {
@@ -77,7 +77,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Appointment Created Successfully" });
         }
 
-        [Authorize(Roles = "DeleteAppointment")]
+        //[Authorize(Roles = "DeleteAppointment")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteAppointment(int id)
@@ -89,7 +89,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Appointment Deleted Successfully" });
         }
 
-        [Authorize(Roles = "AcceptAppointment")]
+       // [Authorize(Roles = "AcceptAppointment")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> AcceptAppointment(int id,[FromBody]AcceptAppointmentDto request)
@@ -123,7 +123,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Appointment accepted successfully." });
         }
 
-        [Authorize(Roles = "DeclineAppointment")]
+        //[Authorize(Roles = "DeclineAppointment")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> DeclineAppointment([FromRoute]int id)

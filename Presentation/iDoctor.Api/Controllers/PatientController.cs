@@ -21,7 +21,7 @@ namespace iDoctor.Api.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = "GetAllPatients")]
+        //[Authorize(Roles = "GetAllPatients")]
         [HttpGet]
         public async Task<IActionResult> GetAllPatients()
         {
@@ -29,7 +29,7 @@ namespace iDoctor.Api.Controllers
             return Ok(patients);
         }
 
-        [Authorize(Roles = "GetPatientById")]
+        //[Authorize(Roles = "GetPatientById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPatientById([FromRoute] int id)
         {
@@ -40,7 +40,7 @@ namespace iDoctor.Api.Controllers
             return Ok(patient);
         }
 
-        [Authorize(Roles = "UpdatePatient")]
+        //[Authorize(Roles = "UpdatePatient")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePatient(int id, [FromForm] UpdatePatientDto request)
         {
@@ -66,7 +66,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Patient Updated Successfully" });
         }
 
-        [Authorize(Roles = "DeletePatient")]
+        //[Authorize(Roles = "DeletePatient")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {

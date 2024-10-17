@@ -18,7 +18,7 @@ namespace iDoctor.Api.Controllers
             _bloodTypeService = bloodTypeService;
         }
 
-        [Authorize(Roles = "GetAllBloodTypes")]
+        //[Authorize(Roles = "GetAllBloodTypes")]
         [HttpGet]
         public async Task<IActionResult> GetAllBloodTypes()
         {
@@ -26,7 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(bloodTypes);
         }
 
-        [Authorize(Roles = "GetBloodTypeById")]
+        //[Authorize(Roles = "GetBloodTypeById")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBloodTypeById([FromRoute] int id)
         {
@@ -37,7 +37,7 @@ namespace iDoctor.Api.Controllers
             return Ok(bloodType);
         }
 
-        [Authorize(Roles = "CreateBloodType")]
+        //[Authorize(Roles = "CreateBloodType")]
         [HttpPost]
 
         public async Task<IActionResult> CreateBloodType([FromBody] CreateBloodTypeDto request)
@@ -57,7 +57,7 @@ namespace iDoctor.Api.Controllers
         }
 
 
-        [Authorize(Roles = "UpdateBloodType")]
+        //[Authorize(Roles = "UpdateBloodType")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateBloodType(int id, [FromBody] UpdateBloodTypeDto request)
@@ -78,7 +78,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Blood Type Updated Successfully" });
         }
 
-        [Authorize(Roles = "DeleteBloodType")]
+        //[Authorize(Roles = "DeleteBloodType")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteBloodType(int id)

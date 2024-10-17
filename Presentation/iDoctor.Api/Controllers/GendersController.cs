@@ -18,7 +18,7 @@ namespace iDoctor.Api.Controllers
             _genderService = genderService;
         }
 
-        [Authorize(Roles = "GetAllGenders")]
+        //[Authorize(Roles = "GetAllGenders")]
         [HttpGet]
         public async Task<IActionResult> GetAllGenders()
         {
@@ -26,7 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(genders);
         }
 
-        [Authorize(Roles = "GetGenderById")]
+        //[Authorize(Roles = "GetGenderById")]
         [HttpGet("{id}")]
       
         public async Task<IActionResult> GetGenderById([FromRoute] int id)
@@ -38,7 +38,7 @@ namespace iDoctor.Api.Controllers
             return Ok(gender);
         }
 
-        [Authorize(Roles = "CreateGender")]
+       // [Authorize(Roles = "CreateGender")]
         [HttpPost]
         public async Task<IActionResult> CreateGender([FromBody] CreateGenderDto request)
         {
@@ -56,7 +56,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Gender Created Successfully" });
         }
 
-        [Authorize(Roles = "UpdateGender")]
+       // [Authorize(Roles = "UpdateGender")]
         [HttpPut("{id}")]      
         public async Task<IActionResult> UpdateGender(int id, [FromBody] UpdateGenderDto request)
         {
@@ -76,7 +76,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Gender Updated Successfully" });
         }
 
-        [Authorize(Roles = "DeleteGender")]
+       // [Authorize(Roles = "DeleteGender")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGender(int id)
         {

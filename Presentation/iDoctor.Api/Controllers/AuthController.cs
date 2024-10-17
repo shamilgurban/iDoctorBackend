@@ -32,7 +32,7 @@ namespace iDoctor.Api.Controllers
             _emailService = emailService;
         }
 
-        [Authorize(Roles = "GetAllUsers")]
+        //[Authorize(Roles = "GetAllUsers")]
         [HttpGet]
 
         public async Task<IActionResult> GetAllUsers()

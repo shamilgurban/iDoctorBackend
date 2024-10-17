@@ -18,7 +18,7 @@ namespace iDoctor.Api.Controllers
             _specialtyService = specialtyService;
         }
 
-        [Authorize(Roles = "GetAllSpecialties")]
+        //[Authorize(Roles = "GetAllSpecialties")]
         [HttpGet]
         public async Task<IActionResult> GetAllSpecialties()
         {
@@ -26,7 +26,7 @@ namespace iDoctor.Api.Controllers
             return Ok(specialties);
         }
 
-        [Authorize(Roles = "GetSpecialtyById")]
+        //[Authorize(Roles = "GetSpecialtyById")]
         [HttpGet("{id}")]
 
         public async Task<IActionResult> GetSpecialtyById([FromRoute] int id)
@@ -38,7 +38,7 @@ namespace iDoctor.Api.Controllers
             return Ok(specialty);
         }
 
-        [Authorize(Roles = "CreateSpecialty")]
+       // [Authorize(Roles = "CreateSpecialty")]
         [HttpPost]
 
         public async Task<IActionResult> CreateSpecialty([FromBody] CreateSpecialtyDto request)
@@ -57,7 +57,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Specialty Created Successfully" });
         }
 
-        [Authorize(Roles = "UpdateSpecialty")]
+        //[Authorize(Roles = "UpdateSpecialty")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateSpecialty(int id, [FromBody] UpdateSpecialtyDto request)
@@ -78,7 +78,7 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Specialty Updated Successfully" });
         }
 
-        [Authorize(Roles = "DeleteSpecialty")]
+        //[Authorize(Roles = "DeleteSpecialty")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSpecialty(int id)
         {
