@@ -1,0 +1,68 @@
+<form action="http://localhost:63116/api/Doctor/UpdateDoctor/1" method="put" enctype="multipart/form-data">
+    <!-- Hidden field for Id -->
+    <input type="hidden" id="id" name="Id" value="0" />
+
+    <!-- Name -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="Name" required />
+
+    <!-- Surname -->
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" name="Surname" required />
+
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="Email" required />
+
+    <!-- BirthDate -->
+    <label for="birthDate">Birth Date:</label>
+    <input type="date" id="birthDate" name="BirthDate" />
+
+    <!-- Phone -->
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="Phone" required />
+
+    <!-- Health Record (Optional) -->
+    <label for="healthRecord">Health Record (Optional):</label>
+    <textarea id="healthRecord" name="HealthRecord"></textarea>
+
+    <!-- GenderId -->
+    <label for="genderId">Gender:</label>
+    <select id="genderId" name="GenderId">
+        <option value="">-- Select Gender --</option>
+        <option value="1">Male</option>
+        <option value="2">Female</option>
+        <option value="3">Other</option>
+    </select>
+
+    <!-- BloodTypeId -->
+    <label for="bloodTypeId">Blood Type:</label>
+    <select id="bloodTypeId" name="BloodTypeId">
+        <option value="">-- Select Blood Type --</option>
+        <option value="1">A+</option>
+        <option value="2">A-</option>
+        <option value="3">B+</option>
+        <option value="4">B-</option>
+        <option value="5">O+</option>
+        <option value="6">O-</option>
+        <option value="7">AB+</option>
+        <option value="8">AB-</option>
+    </select>
+
+    <!-- MaritalStatusId -->
+    <label for="maritalStatusId">Marital Status:</label>
+    <select id="maritalStatusId" name="MaritalStatusId">
+        <option value="">-- Select Marital Status --</option>
+        <option value="1">Single</option>
+        <option value="2">Married</option>
+        <option value="3">Divorced</option>
+        <option value="4">Widowed</option>
+    </select>
+
+    <!-- Image -->
+    <label for="image">Upload Image:</label>
+    <input type="file" id="image" name="Image" accept="image/*" />
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+</form>
