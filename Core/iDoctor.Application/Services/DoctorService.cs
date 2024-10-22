@@ -5,8 +5,6 @@ using iDoctor.Application.Helpers.Enums;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Domain.Entities;
 using iDoctor.Domain.Interfaces;
-using Microsoft.Extensions.Hosting;
-using System.IO;
 using System.Linq.Expressions;
 
 

@@ -5,6 +5,7 @@ using iDoctor.Application.Helpers.Enums;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.AppointmentValidators;
 using iDoctor.Application.Validators.DoctorValidators;
+using iDoctor.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +36,7 @@ namespace iDoctor.Api.Controllers
 
         //[Authorize(Roles = "GetDoctorsAllAppointmentsById")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDoctorsAllAppointmentsById([FromRoute] int id)
+        public async Task<IActionResult> GetDoctorsAllAppointmentsByDoctorId([FromRoute] int id)
         {
             var appointments = await _appointmentService.GetWhereAsync(a => a.DoctorId == id);
             return Ok(appointments);
@@ -43,9 +44,10 @@ namespace iDoctor.Api.Controllers
 
         //[Authorize(Roles = "GetDoctorsPendingAppointmentsById")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDoctorsPendingAppointmentsById([FromRoute]int id)
+        public async Task<IActionResult> GetDoctorsPendingAppointmentsByDoctorId([FromRoute]int id)
         {
-            var appointments = await _appointmentService.GetWhereAsync(a=>a.Status==(int)AppointmentStatus.Pending && a.DoctorId==id);
+            var appointments = await _appointmentService.GetWhereAsync(a=>a.Status==(int)AppointmentStatus.Pending 
+                                                                       && a.DoctorId==id);
             return Ok(appointments);
         }
 
@@ -69,6 +71,11 @@ namespace iDoctor.Api.Controllers
             ValidationResult validationResult = validator.Validate(request);
 
             if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
+            var appointment = await _appointmentService.GetSingleAsync(x => x.AppointmentDate == request.AppointmentDate 
+                                                                         && x.DoctorId == request.DoctorId);
+
+            if (appointment != null) return BadRequest(new { Message="Doctor already has another appointment for chosen date."});
 
             var result=await _appointmentService.AddAsync(request);
 

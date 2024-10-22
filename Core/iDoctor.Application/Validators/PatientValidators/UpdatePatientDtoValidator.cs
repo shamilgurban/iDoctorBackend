@@ -25,6 +25,7 @@ namespace iDoctor.Application.Validators.PatientValidators
               .WithMessage("Please enter a valid Azerbaijan phone number.");
 
             RuleFor(x => x.Image)
+                .NotEmpty().WithMessage("Image is required")
                 .Must(BeValidImage)
                 .When(x => x.Image != null)
                 .WithMessage("Image must be a valid JPG, JPEG, PNG, or PDF and less than 5MB.");
@@ -32,6 +33,8 @@ namespace iDoctor.Application.Validators.PatientValidators
             RuleFor(x => x.BirthDate)
                 .Must(date => date == null || date <= DateTime.UtcNow).WithMessage("BirthDate must be in the past or null.");
 
+            RuleFor(x => x.BloodTypeId)
+                .NotEmpty().WithMessage("Blood Type is required");
         }
 
         private bool BeValidImage(IFormFile? file)

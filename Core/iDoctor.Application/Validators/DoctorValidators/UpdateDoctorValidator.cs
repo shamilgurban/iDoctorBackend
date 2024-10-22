@@ -25,6 +25,16 @@ namespace iDoctor.Application.Validators.DoctorValidators
             .Matches(@"^\+994(\s?)\d{2}(\s?)\d{3}(\s?)\d{2}(\s?)\d{2}$")
             .WithMessage("Please enter a valid Azerbaijan phone number.");
 
+            RuleFor(x => x.Biography)
+               .NotEmpty().WithMessage("Biography is required.")
+               .Length(10, 300).WithMessage("Biography must be between 10 and 300 characters");
+
+            RuleFor(x => x.City)
+              .NotEmpty().WithMessage("City is required.");
+
+            RuleFor(x => x.Country)
+              .NotEmpty().WithMessage("Country is required.");
+
             RuleFor(x => x.ZipCode)
                   .InclusiveBetween(1000, 9999)
                   .WithMessage("ZIP code must be a 4-digit number.");
@@ -44,6 +54,7 @@ namespace iDoctor.Application.Validators.DoctorValidators
             .SetValidator(new CreateEducationValidator());
 
             RuleFor(x => x.Image)
+              .NotEmpty().WithMessage("Image is required")
               .Must(BeValidImage)
               .When(x => x.Image != null)
               .WithMessage("Image must be a valid JPG, JPEG, PNG, or PDF and less than 5MB.");

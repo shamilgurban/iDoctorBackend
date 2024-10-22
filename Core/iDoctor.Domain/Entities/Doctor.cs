@@ -8,9 +8,9 @@ namespace iDoctor.Domain.Entities
         public bool IsVerified { get; set; }
         public string VerificationDocumentPath { get; set; }
         public string? Biography { get; set; }
-        public string? City { get; set; }
+        public string City { get; set; } = "Bakı";
         public string? District { get; set; }
-        public string? Country { get; set; }
+        public string Country { get; set; } = "Azərbaycan";
         public int? ZipCode { get; set; }
         public string? ClinicName { get; set; }
         public string? ClinicAddress { get; set; }
