@@ -38,7 +38,7 @@ namespace iDoctor.Persistence.Context
                                    new Role { Id = 12, Name = "GetDoctorById", UserType=3 },//patient
                                    new Role { Id = 13, Name = "DeleteDoctor", UserType=1 },//admin
                                    new Role { Id = 14, Name = "GetVerifiedDoctors", UserType=1 },//admin
-                                   new Role { Id = 15, Name = "GetUnVerifiedDoctors", UserType=1 },//admin
+                                   new Role { Id = 15, Name = "GetUnverifiedDoctors", UserType=1 },//admin
                                    new Role { Id = 16, Name = "GetAllPatients", UserType=1 },//admin
                                    new Role { Id = 17, Name = "GetPatientById", UserType=1 },//admin
                                    new Role { Id = 18, Name = "GetPatientById", UserType=2 },//doctor
@@ -90,7 +90,9 @@ namespace iDoctor.Persistence.Context
                                    new Role { Id = 64, Name = "CreateSpecialty", UserType=1 },//admin
                                    new Role { Id = 65, Name = "UpdateSpecialty", UserType=1 },//admin
                                    new Role { Id = 66, Name = "DeleteSpecialty", UserType=1 },//admin
-                                   new Role { Id = 67, Name = "GetPatientById", UserType = 3 }//patient
+                                   new Role { Id = 67, Name = "GetPatientById", UserType = 3 },//patient
+                                   new Role { Id = 68, Name = "GetRejectedDoctors", UserType = 1 },//admin
+                                   new Role { Id = 69, Name = "RejectDoctor", UserType = 1 }//admin
                                    );
 
             modelBuilder.Entity<Gender>().HasData(
@@ -150,6 +152,13 @@ namespace iDoctor.Persistence.Context
                                    new Analysis { Id = 13, Name = "Kardioloji testlər" },
                                    new Analysis { Id = 14, Name = "Hormon müayinələri" },
                                    new Analysis { Id = 15, Name = "Autoimmun xəstəliklərin təyini" });
+
+            modelBuilder.Entity<User>().HasData(
+                                   new User { Id = 1, Name = "Admin",Surname="Admin",
+                                              Email = "admin@idoctor.az",Type=1,
+                                              HashedPassword= "jTdrF7oYKOLG8cWixx8GzyS98/vgh9FVuzZxlcb3K3jttxIsdF+z/OrRaFIC73Ty"
+                                   });
+                                  
 
             modelBuilder.Entity<User>()
                         .HasOne(u => u.Patient)

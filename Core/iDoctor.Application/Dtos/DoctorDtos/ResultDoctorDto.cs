@@ -1,6 +1,4 @@
-﻿
-
-using iDoctor.Application.Dtos.EducationDtos;
+﻿using iDoctor.Application.Dtos.EducationDtos;
 
 namespace iDoctor.Application.Dtos.DoctorDtos
 {
@@ -11,7 +9,7 @@ namespace iDoctor.Application.Dtos.DoctorDtos
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public bool IsVerified { get; set; }  
+        public string VerificationStatus { get; set; }  
         public string Biography { get; set; }
         public string City { get; set; }
         public string District { get; set; }

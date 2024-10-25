@@ -60,7 +60,7 @@ builder.Services.AddServiceLayer();
 
 var app = builder.Build();
 
-
+app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseStaticFiles();
 

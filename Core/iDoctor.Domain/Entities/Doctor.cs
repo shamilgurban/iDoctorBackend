@@ -5,7 +5,7 @@ namespace iDoctor.Domain.Entities
 {
     public class Doctor:BaseEntity
     {
-        public bool IsVerified { get; set; }
+        public int VerificationStatus { get; set; }
         public string VerificationDocumentPath { get; set; }
         public string? Biography { get; set; }
         public string City { get; set; } = "Bakı";

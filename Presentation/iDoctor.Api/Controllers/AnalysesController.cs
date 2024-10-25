@@ -21,7 +21,7 @@ namespace iDoctor.Api.Controllers
         //[Authorize(Roles = "GetAllAnalyses")]
         [HttpGet]
         public async Task<IActionResult> GetAllAnalyses()
-        {
+        {           
             var analyses = await _analysisService.GetAllAsync();
             return Ok(analyses);
         }
@@ -32,9 +32,8 @@ namespace iDoctor.Api.Controllers
         {
             var analysis = await _analysisService.GetByIdAsync(id);
 
-            if (analysis == null) return NotFound(new { Message = "Analysis Not Found" });
-
-            return Ok(analysis);
+            return analysis == null ? NotFound(new { Message = "Analysis Not Found" }) : 
+                                      Ok(analysis);
         }
 
 
@@ -71,9 +70,8 @@ namespace iDoctor.Api.Controllers
 
             var result = await _analysisService.UpdateAsync(id, request);
 
-            if (!result) return NotFound(new { Message = "Analysis Not Found" });
-
-            return Ok(new { Message = "Analysis Updated Successfully" });
+            return result ? Ok(new { Message = "Analysis Updated Successfully" }) :
+                            NotFound(new { Message = "Analysis Not Found" });
         }
 
         //[Authorize(Roles = "DeleteAnalysis")]
@@ -81,10 +79,9 @@ namespace iDoctor.Api.Controllers
         public async Task<IActionResult> DeleteAnalysis(int id)
         {
             var result = await _analysisService.RemoveAsync(id);
-
-            if (!result) return NotFound(new { Message = "Analysis Not Found" });
-
-            return Ok(new { Message = "Analysis Deleted Successfully" });
-        }
+           
+            return result ? Ok(new { Message = "Analysis Deleted Successfully" }) :
+                             NotFound(new { Message = "Analysis Not Found" });
+        } 
     }
 }

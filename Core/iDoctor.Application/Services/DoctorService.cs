@@ -60,11 +60,9 @@ namespace iDoctor.Application.Services
             var doctor = new Doctor
             {
                 User = user,
-                IsVerified = true,
+                VerificationStatus = (int)VerificationStatuses.Unverified,
                 VerificationDocumentPath = fileName
             };
-
-
 
             await _doctorRepository.AddAsync(doctor);
             await _doctorRepository.SaveAsync();
@@ -165,8 +163,21 @@ namespace iDoctor.Application.Services
 
             if (doctor == null) return false;
 
-            doctor.IsVerified = true;
+             doctor.VerificationStatus = (int)VerificationStatuses.Verified;
              _doctorRepository.Update(doctor);
+            await _doctorRepository.SaveAsync();
+
+            return true;
+        }
+
+        public async Task<bool> RejectDoctorAsync(int id)
+        {
+            var doctor = await _doctorRepository.GetByIdAsync(id);
+
+            if (doctor == null) return false;
+
+            doctor.VerificationStatus = (int)VerificationStatuses.Rejected;
+            _doctorRepository.Update(doctor);
             await _doctorRepository.SaveAsync();
 
             return true;

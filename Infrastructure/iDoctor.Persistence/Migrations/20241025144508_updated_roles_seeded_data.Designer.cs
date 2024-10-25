@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iDoctor.Persistence.Context;
 
@@ -11,9 +12,11 @@ using iDoctor.Persistence.Context;
 namespace iDoctor.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241025144508_updated_roles_seeded_data")]
+    partial class updated_roles_seeded_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -501,7 +504,7 @@ namespace iDoctor.Persistence.Migrations
                         new
                         {
                             Id = 15,
-                            Name = "GetUnverifiedDoctors",
+                            Name = "GetUnVerifiedDoctors",
                             UserType = 1
                         },
                         new
@@ -821,12 +824,6 @@ namespace iDoctor.Persistence.Migrations
                             Id = 68,
                             Name = "GetRejectedDoctors",
                             UserType = 1
-                        },
-                        new
-                        {
-                            Id = 69,
-                            Name = "RejectDoctor",
-                            UserType = 1
                         });
                 });
 
@@ -975,17 +972,6 @@ namespace iDoctor.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "admin@idoctor.az",
-                            HashedPassword = "jTdrF7oYKOLG8cWixx8GzyS98/vgh9FVuzZxlcb3K3jttxIsdF+z/OrRaFIC73Ty",
-                            Name = "Admin",
-                            Surname = "Admin",
-                            Type = 1
-                        });
                 });
 
             modelBuilder.Entity("iDoctor.Domain.Entities.Appointment", b =>

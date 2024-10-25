@@ -48,18 +48,12 @@ namespace iDoctor.Api.Controllers
             RegisterDtoValidator validator = new RegisterDtoValidator();
             ValidationResult validationResult = validator.Validate(request);
 
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
-
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+ 
             var user = await _userService.GetSingleAsync(m => m.Email == request.Email);
 
-            if (user is not null)
-            {
-                return BadRequest(new { Message = "This Email Already Used" });
-            }
-
+            if (user is not null) return BadRequest(new { Message = "This Email Already Used" });
+        
             await _userService.RegisterAsync(request);
 
             return Ok(new { Message = "User Created Successfully" });
@@ -72,18 +66,12 @@ namespace iDoctor.Api.Controllers
             RegisterPatientDtoValidator validator = new RegisterPatientDtoValidator();
             ValidationResult validationResult = validator.Validate(request);
 
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
-
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+          
             var user = await _userService.GetSingleAsync(m => m.Email == request.Email);
 
-            if (user is not null)
-            {
-                return BadRequest(new { Message = "This Email Already Used" });
-            }
-
+            if (user is not null) return BadRequest(new { Message = "This Email Already Used" });
+          
             await _patientService.RegisterAsync(request);
 
             return Ok(new { Message = "Patient Created Successfully" });
@@ -108,9 +96,17 @@ namespace iDoctor.Api.Controllers
 
             var mail = new EmailDto();
             mail.ReceiversMail = request.Email;
-            mail.Subject = "Doctor Registration Confirmation";
-            mail.Message = $"Dear {request.Name} {request.Surname},Thank you for registering with us. " +
-                $"We will verify your credentials and notify you once approved.";
+            mail.Subject = "Həkim Qeydiyyatının Təsdiqi";
+            mail.Message = $@"Hörmətli {request.Name} {request.Surname},
+
+                              iDoctor platformasında qeydiyyatdan keçdiyiniz üçün təşəkkür edirik.
+                              Sənədlərinizin yoxlanışı həyata keçiriləcək və hesabınız təsdiqləndikdən 
+                              sonra sizə məlumat veriləcək.
+
+                              iDoctor Komandası adından sizi salamlayırıq və xoş gəldiniz deyirik!
+
+                              Hörmətlə,
+                              iDoctor Komandası";
 
             await _emailService.SendEmailAsync(mail);
 
@@ -124,18 +120,12 @@ namespace iDoctor.Api.Controllers
             LoginDtoValidator validator = new LoginDtoValidator();
             ValidationResult validationResult = validator.Validate(request);
 
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
             var token = await _userService.LoginAsync(request);
 
-            if (token is null)
-            {
-                return BadRequest(new { Message = "Email or Password is wrong" });
-            }
-
+            if (token is null) return BadRequest(new { Message = "Email or Password is wrong" });
+           
             return Ok(token);
         }
     }

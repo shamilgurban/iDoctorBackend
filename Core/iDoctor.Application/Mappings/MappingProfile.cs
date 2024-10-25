@@ -96,7 +96,9 @@ namespace iDoctor.Application.Mappings
                                                   .ForMember(dest => dest.Phone,
                                                     opt => opt.MapFrom(src => src.User.Phone))
                                                    .ForMember(dest => dest.SpecialtyName,
-                                                    opt => opt.MapFrom(src => src.Specialty.Name));
+                                                    opt => opt.MapFrom(src => src.Specialty.Name))
+                                                   .ForMember(dest => dest.VerificationStatus,
+                                                    opt => opt.MapFrom(src => ((VerificationStatuses)src.VerificationStatus).ToString()));
 
             CreateMap<UpdateDoctorDto, Doctor>()
                                                 .ForPath(dest => dest.User.Name, opt => opt.MapFrom(src => src.Name))

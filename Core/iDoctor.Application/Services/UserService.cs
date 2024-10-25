@@ -99,7 +99,8 @@ namespace iDoctor.Application.Services
 
             if(user is null) return null;
 
-            if (user.Type == (int)UserTypes.Doctor && !user.Doctor.IsVerified) return null;
+            if (user.Type == (int)UserTypes.Doctor && 
+                user.Doctor.VerificationStatus != (int)VerificationStatuses.Verified) return null;
             
             string hashedPassword = user.HashedPassword;
 

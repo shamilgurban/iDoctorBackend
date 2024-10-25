@@ -1,6 +1,7 @@
 ﻿using FluentValidation.Results;
 using iDoctor.Application.Dtos.DoctorDtos;
 using iDoctor.Application.Dtos.EmailDtos;
+using iDoctor.Application.Helpers.Enums;
 using iDoctor.Application.Services.Interfaces;
 using iDoctor.Application.Validators.DoctorValidators;
 using Microsoft.AspNetCore.Authorization;
@@ -93,16 +94,17 @@ namespace iDoctor.Api.Controllers
             var emailDto = new EmailDto
             {
                 ReceiversMail = doctor.Email,
-                Subject = "Your Doctor Account Has Been Verified",
+                Subject = "Həkim Hesabınız Təsdiqləndi",
                 Message = $@"
-                             Dear Dr. {doctor.Name} {doctor.Surname},
-                             We are pleased to inform you that your doctor account on the iDoctor platform has been successfully verified.
-                             You now have full access to the platform, where you can manage patient appointments, view test results, and provide consultations.
-                             If you have any questions or need further assistance, feel free to contact our support team at support@idoctor.com.
-                             Thank you for choosing iDoctor!
+                             Hörmətli Dr. {doctor.Name} {doctor.Surname},
+                             Sizi iDoctor platformasında həkim hesabınızın uğurla təsdiqləndiyi barədə məlumatlandırmaqdan məmnunluq duyuruq.
+                             Artıq platformaya tam giriş imkanı əldə etmisiniz və burada pasiyent görüşlərini idarə edə, test nəticələrinə baxa və məsləhətlər verə bilərsiniz.
+                             Hər hansı bir sualınız yaranarsa və ya əlavə köməyə ehtiyacınız olarsa, support@idoctor.com ünvanı vasitəsilə dəstək komandamızla əlaqə saxlaya bilərsiniz.
 
-                             Best regards,
-                             iDoctor Team"
+                             iDoctor-u seçdiyiniz üçün təşəkkür edirik!
+
+                             Hörmətlə,
+                             iDoctor Komandası"
             };
 
 
@@ -111,19 +113,59 @@ namespace iDoctor.Api.Controllers
             return Ok(new { Message = "Doctor verified successfully." });
         }
 
-       // [Authorize(Roles = "GetVerifiedDoctors")]
+        //[Authorize(Roles = "RejectDoctor")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> RejectDoctor([FromRoute] int id)
+        {
+            var result = await _doctorService.RejectDoctorAsync(id);
+
+            if (!result) return NotFound(new { Message = "Doctor not found or could not be rejected." });
+
+            var doctor = await _doctorService.GetByIdAsync(id);
+
+            var emailDto = new EmailDto
+            {
+                ReceiversMail = doctor.Email,
+                Subject = "Həkim Qeydiyyatınız Təsdiqlənmədi",
+                Message = $@"
+                             Hörmətli {doctor.Name} {doctor.Surname},
+                             Təəssüf hissi ilə bildirmək istəyirik ki, iDoctor platformasında həkim qeydiyyatınız üçün təqdim etdiyiniz məlumat və sənədlər təhlil edilərkən, təsdiqlənməyə uyğun olmadığı müəyyən edilmişdir.
+                 
+                             Əgər əlavə məlumat və ya suallarınız varsa və ya hesabınızın təsdiqlənməməsi səbəbləri ilə bağlı daha ətraflı məlumat almaq istəyirsinizsə, xahiş edirik support@idoctor.com ünvanı vasitəsilə bizimlə əlaqə saxlayın.
+
+                             iDoctor platformasına göstərdiyiniz maraq üçün təşəkkür edirik və gələcəkdə yenidən müraciət etməyinizi arzu edirik.
+
+                             Hörmətlə,
+                             iDoctor Komandası"
+            };
+
+
+            await _emailService.SendEmailAsync(emailDto);
+
+            return Ok(new { Message = "Doctor rejected successfully." });
+        }
+
+        // [Authorize(Roles = "GetVerifiedDoctors")]
         [HttpGet]
         public async Task<IActionResult> GetVerifiedDoctors()
         {
-            var doctors = await _doctorService.GetWhereAsync(d=>d.IsVerified);
+            var doctors = await _doctorService.GetWhereAsync(d => d.VerificationStatus == (int)VerificationStatuses.Verified);
             return Ok(doctors);
         }
 
-       // [Authorize(Roles = "GetUnVerifiedDoctors")]
+        // [Authorize(Roles = "GetUnverifiedDoctors")]
         [HttpGet]
-        public async Task<IActionResult> GetUnVerifiedDoctors()
+        public async Task<IActionResult> GetUnverifiedDoctors()
         {
-            var doctors = await _doctorService.GetWhereAsync(d => d.IsVerified==false);
+            var doctors = await _doctorService.GetWhereAsync(d => d.VerificationStatus == (int)VerificationStatuses.Unverified);
+            return Ok(doctors);
+        }
+
+        // [Authorize(Roles = "GetRejectedDoctors")]
+        [HttpGet]
+        public async Task<IActionResult> GetRejectedDoctors()
+        {
+            var doctors = await _doctorService.GetWhereAsync(d => d.VerificationStatus == (int)VerificationStatuses.Rejected);
             return Ok(doctors);
         }
     }

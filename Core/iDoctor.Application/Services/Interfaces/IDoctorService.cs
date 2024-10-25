@@ -15,5 +15,6 @@ namespace iDoctor.Application.Services.Interfaces
         Task<bool> RemoveAsync(int id);
         Task<bool> UpdateAsync(int id, UpdateDoctorDto model);
         Task<bool> VerifyDoctorAsync(int id);
+        Task<bool> RejectDoctorAsync(int id);
     }
 }
