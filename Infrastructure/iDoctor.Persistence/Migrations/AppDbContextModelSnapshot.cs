@@ -980,7 +980,7 @@ namespace iDoctor.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "admin@idoctor.az",
+                            Email = "admin@idoktor.az",
                             HashedPassword = "jTdrF7oYKOLG8cWixx8GzyS98/vgh9FVuzZxlcb3K3jttxIsdF+z/OrRaFIC73Ty",
                             Name = "Admin",
                             Surname = "Admin",

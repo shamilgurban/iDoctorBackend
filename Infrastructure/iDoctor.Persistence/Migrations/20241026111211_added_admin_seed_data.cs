@@ -13,7 +13,7 @@ namespace iDoctor.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "HashedPassword", "Image", "Name", "Phone", "Surname", "Type" },
-                values: new object[] { 1, "admin@idoctor.az", "jTdrF7oYKOLG8cWixx8GzyS98/vgh9FVuzZxlcb3K3jttxIsdF+z/OrRaFIC73Ty", null, "Admin", null, "Admin", 1 });
+                values: new object[] { 1, "admin@idoktor.az", "jTdrF7oYKOLG8cWixx8GzyS98/vgh9FVuzZxlcb3K3jttxIsdF+z/OrRaFIC73Ty", null, "Admin", null, "Admin", 1 });
         }
 
         /// <inheritdoc />

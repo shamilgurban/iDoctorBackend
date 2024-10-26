@@ -12,7 +12,7 @@ using iDoctor.Persistence.Context;
 namespace iDoctor.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241025153631_added_admin_seed_data")]
+    [Migration("20241026111211_added_admin_seed_data")]
     partial class added_admin_seed_data
     {
         /// <inheritdoc />
@@ -983,7 +983,7 @@ namespace iDoctor.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "admin@idoctor.az",
+                            Email = "admin@idoktor.az",
                             HashedPassword = "jTdrF7oYKOLG8cWixx8GzyS98/vgh9FVuzZxlcb3K3jttxIsdF+z/OrRaFIC73Ty",
                             Name = "Admin",
                             Surname = "Admin",
